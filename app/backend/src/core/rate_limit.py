@@ -24,7 +24,7 @@ RATE_LIMIT_PREFIX_RULES: list[tuple[str, int, int]] = [
 GLOBAL_RATE_LIMIT = (200, 60)  # 200 req / 60s
 
 # 회원가입 IP 기준 24시간 최대 계정 수 제한
-REGISTER_ACCOUNT_LIMIT = 3  # 3 accounts / 24h
+REGISTER_ACCOUNT_LIMIT = 10  # 10 accounts / 24h
 REGISTER_ACCOUNT_WINDOW = 86400  # 24h in seconds
 
 
