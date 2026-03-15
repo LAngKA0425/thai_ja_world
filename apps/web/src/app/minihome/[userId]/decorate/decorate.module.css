@@ -21,12 +21,12 @@
 
 .backButton {
   padding: 8px 12px;
-  background: #FFE6F0;
+  background: #E8F5E9;
   border: none;
   border-radius: 8px;
   font-size: 13px;
   font-weight: 600;
-  color: #FF6B9D;
+  color: #145A46;
   cursor: pointer;
   margin-bottom: 12px;
   transition: all 0.2s ease;
@@ -34,8 +34,8 @@
 }
 
 .backButton:hover {
-  background: #FFB6D9;
-  color: #E63384;
+  background: #C8E6C9;
+  color: #0d4a37;
 }
 
 .content {
@@ -47,7 +47,7 @@
 .title {
   font-size: 20px;
   font-weight: 700;
-  color: #FF6B9D;
+  color: #145A46;
   margin: 0 0 8px 0;
 }
 
@@ -82,7 +82,7 @@
   padding: 32px 16px;
   background: linear-gradient(135deg, #fff 0%, #fff9f5 100%);
   border-radius: 15px;
-  border: 2px dashed #FFE6F0;
+  border: 2px dashed #E8F5E9;
   text-align: center;
   color: #999;
 }
@@ -102,7 +102,7 @@
   display: flex;
   gap: 8px;
   padding: 12px 0;
-  border-top: 3px solid var(--primary-pink);
+  border-top: 3px solid var(--primary-green);
 }
 
 .saveButton,
@@ -118,23 +118,23 @@
 }
 
 .saveButton {
-  background: linear-gradient(135deg, #FF6B9D 0%, #FF8FB3 100%);
+  background: linear-gradient(135deg, #145A46 0%, #1B7A5A 100%);
   color: white;
-  box-shadow: 0 2px 6px rgba(255, 107, 157, 0.3);
+  box-shadow: 0 2px 6px rgba(20, 90, 70, 0.3);
 }
 
 .saveButton:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(255, 107, 157, 0.4);
+  box-shadow: 0 4px 10px rgba(20, 90, 70, 0.4);
 }
 
 .resetButton {
-  background: #FFE6F0;
-  color: #FF6B9D;
+  background: #E8F5E9;
+  color: #145A46;
 }
 
 .resetButton:hover:not(:disabled) {
-  background: #FFB6D9;
+  background: #C8E6C9;
 }
 
 .saveButton:disabled,

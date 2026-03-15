@@ -3,8 +3,8 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuthStore } from '@/stores/auth-store'
-import { BottomNav } from '@/components/layout/BottomNav'
-import { TopBar } from '@/components/layout/TopBar'
+import { HomeBottomNav } from '@/components/home/HomeBottomNav'
+import { HomeHeader } from '@/components/home/HomeHeader'
 import { t } from '@/lib/i18n'
 
 export default function MainLayout({
@@ -27,7 +27,7 @@ export default function MainLayout({
 
   if (isLoading || !hasCheckedAuth) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-white to-pink-50">
+      <div className="min-h-screen flex items-center justify-center bg-[#FAFAF8]">
         <div className="text-center">
           <div className="loading-spinner mb-4 mx-auto" />
           <p className="text-gray-600">{t('common.loading')}</p>
@@ -41,12 +41,12 @@ export default function MainLayout({
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-pink-50 flex flex-col pb-20">
-      <TopBar user={user} />
+    <div className="min-h-screen bg-[#FAFAF8] flex flex-col pb-20">
+      <HomeHeader />
       <main className="flex-1 overflow-y-auto">
         {children}
       </main>
-      <BottomNav />
+      <HomeBottomNav />
     </div>
   )
 }

@@ -4,7 +4,7 @@
 
 .slot {
   background: linear-gradient(135deg, #fff 0%, #fff9f5 100%);
-  border: 3px dashed var(--primary-pink);
+  border: 3px dashed var(--primary-green);
   border-radius: 12px;
   padding: 16px;
   text-align: center;
@@ -35,10 +35,10 @@
 
 .removeButton {
   padding: 4px 8px;
-  background: #FFE6F0;
+  background: #E8F5E9;
   border: none;
   border-radius: 6px;
-  color: #FF6B9D;
+  color: #145A46;
   font-size: 11px;
   font-weight: 600;
   cursor: pointer;
@@ -46,7 +46,7 @@
 }
 
 .removeButton:hover:not(:disabled) {
-  background: #FFB6D9;
+  background: #C8E6C9;
 }
 
 .removeButton:disabled {
@@ -57,7 +57,7 @@
 .selectButton {
   margin-top: 8px;
   padding: 8px 12px;
-  background: linear-gradient(135deg, #FF6B9D 0%, #FF8FB3 100%);
+  background: linear-gradient(135deg, #145A46 0%, #1B7A5A 100%);
   color: white;
   border: none;
   border-radius: 8px;
@@ -111,7 +111,7 @@
 .pickerTitle {
   font-size: 16px;
   font-weight: 700;
-  color: #FF6B9D;
+  color: #145A46;
   margin: 0 0 12px 0;
   text-align: center;
 }
@@ -126,7 +126,7 @@
 .itemOption {
   padding: 12px;
   background: white;
-  border: 2px solid #FFE6F0;
+  border: 2px solid #E8F5E9;
   border-radius: 12px;
   display: flex;
   flex-direction: column;
@@ -137,8 +137,8 @@
 }
 
 .itemOption:hover:not(:disabled) {
-  border-color: var(--primary-pink);
-  background: #FFF5FA;
+  border-color: var(--primary-green);
+  background: #F1F8F6;
   transform: translateY(-2px);
 }
 
@@ -162,15 +162,15 @@
 .closePickerButton {
   width: 100%;
   padding: 10px;
-  background: #FFE6F0;
+  background: #E8F5E9;
   border: none;
   border-radius: 8px;
-  color: #FF6B9D;
+  color: #145A46;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .closePickerButton:hover {
-  background: #FFB6D9;
+  background: #C8E6C9;
 }

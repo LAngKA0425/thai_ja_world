@@ -9,7 +9,7 @@
 .bannerContainer {
   padding: 8px 12px;
   background: white;
-  border-bottom: 1px solid #FFE6F0;
+  border-bottom: 1px solid #E8F5E9;
   overflow-x: auto;
 }
 
@@ -26,7 +26,7 @@
 .title {
   font-size: 18px;
   font-weight: 700;
-  color: #FF6B9D;
+  color: #145A46;
   margin: 0;
 }
 
@@ -41,7 +41,7 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  background: #FFE6F0;
+  background: #E8F5E9;
   padding: 4px 8px;
   border-radius: 6px;
   color: #666;
@@ -107,9 +107,9 @@
 
 .collapseButton {
   padding: 8px;
-  background: #FFE6F0;
+  background: #E8F5E9;
   border: none;
-  color: #FF6B9D;
+  color: #145A46;
   font-weight: 600;
   font-size: 12px;
   cursor: pointer;
@@ -117,7 +117,7 @@
 }
 
 .collapseButton:hover {
-  background: #FFB6D9;
+  background: #C8E6C9;
 }
 
 .chatSection:not(.collapsed) > :not(.collapseButton) {
@@ -139,7 +139,7 @@
 
 .errorMessage {
   padding: 8px 12px;
-  background: #FFE6F0;
+  background: #E8F5E9;
   color: #E63384;
   border-bottom: 2px solid #E63384;
   font-size: 12px;

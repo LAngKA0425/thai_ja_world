@@ -59,7 +59,7 @@ export function BroadcastCompose({
           <span className="text-xs text-gray-500">
             {message.length} / {maxLength}
           </span>
-          <span className="text-xs font-bold text-pink-600">
+          <span className="text-xs font-bold text-[#145A46]">
             {type === 'NORMAL' ? '일반' : '프리미엄'}
           </span>
         </div>
@@ -67,7 +67,7 @@ export function BroadcastCompose({
 
       {/* Preview */}
       {message && (
-        <div className="bg-gradient-to-r from-pink-100 to-yellow-100 rounded-2xl p-3">
+        <div className="bg-gradient-to-r from-emerald-50 to-green-50 rounded-2xl p-3">
           <p className="text-xs text-gray-600 mb-2">미리보기:</p>
           <div className="cute-card p-3 text-center">
             <p className="font-bold text-sm">{message}</p>

@@ -2,21 +2,21 @@
   background: linear-gradient(135deg, #fff 0%, #fff9f5 100%);
   border-radius: 15px;
   padding: 12px;
-  border: 3px solid var(--primary-pink);
+  border: 3px solid var(--primary-green);
   margin-bottom: 16px;
 }
 
 .label {
   font-size: 13px;
   font-weight: 600;
-  color: #FF6B9D;
+  color: #145A46;
   margin-bottom: 8px;
 }
 
 .textarea {
   width: 100%;
   padding: 10px;
-  border: 2px solid #FFE6F0;
+  border: 2px solid #E8F5E9;
   border-radius: 12px;
   font-family: inherit;
   font-size: 13px;
@@ -28,8 +28,8 @@
 
 .textarea:focus {
   outline: none;
-  border-color: var(--primary-pink);
-  box-shadow: 0 0 0 3px rgba(255, 107, 157, 0.1);
+  border-color: var(--primary-green);
+  box-shadow: 0 0 0 3px rgba(20, 90, 70, 0.1);
 }
 
 .textarea:disabled {
@@ -51,7 +51,7 @@
 }
 
 .counter.full {
-  color: #FF6B9D;
+  color: #145A46;
   font-weight: 600;
 }
 
@@ -60,7 +60,7 @@
   align-items: center;
   gap: 6px;
   padding: 8px 12px;
-  background: linear-gradient(135deg, #FF6B9D 0%, #FF8FB3 100%);
+  background: linear-gradient(135deg, #145A46 0%, #1B7A5A 100%);
   color: white;
   border: none;
   border-radius: 8px;
@@ -68,13 +68,13 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 0 2px 6px rgba(255, 107, 157, 0.3);
+  box-shadow: 0 2px 6px rgba(20, 90, 70, 0.3);
   white-space: nowrap;
 }
 
 .submitButton:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(255, 107, 157, 0.4);
+  box-shadow: 0 4px 10px rgba(20, 90, 70, 0.4);
 }
 
 .submitButton:disabled {

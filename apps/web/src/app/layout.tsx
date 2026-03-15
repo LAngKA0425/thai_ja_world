@@ -7,7 +7,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   viewportFit: 'cover',
-  themeColor: '#FF6B9D',
+  themeColor: '#145A46',
 }
 
 export const metadata: Metadata = {
@@ -33,7 +33,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko" suppressHydrationWarning>
-      <body className="bg-gradient-to-b from-white to-pink-50 overflow-x-hidden">
+      <body className="bg-[#FAFAF8] overflow-x-hidden">
         <Providers>
           {children}
         </Providers>

@@ -23,6 +23,14 @@ const menuSections = [
     ],
   },
   {
+    title: '커뮤니티 & 서비스',
+    items: [
+      { icon: '🏛️', label: '광장', desc: '자유롭게 소통하는 광장', href: '/plaza' },
+      { icon: '🛍️', label: '상점', desc: '아이템과 꾸미기 상점', href: '/shop' },
+      { icon: '👥', label: '친구', desc: '친구 목록과 관리', href: '/friends' },
+    ],
+  },
+  {
     title: '서비스',
     items: [
       { icon: '📢', label: '공지사항', desc: '운영 공지 확인', href: '/community' },

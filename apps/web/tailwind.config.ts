@@ -9,11 +9,11 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        primary: '#FF6B9D',
-        secondary: '#FFE66D',
+        primary: '#145A46',
+        secondary: '#E8F5E9',
         accent: '#95E1D3',
-        'cute-pink': '#FFB6D9',
-        'cute-peach': '#FFD4A3',
+        'cute-pink': '#C8E6C9',
+        'cute-peach': '#A5D6A7',
         'cute-purple': '#D4A5FF',
         'cute-blue': '#A5D4FF',
       },
@@ -42,8 +42,8 @@ const config: Config = {
         'cute-lg': '30px',
       },
       boxShadow: {
-        'cute': '0 4px 12px rgba(255, 107, 157, 0.2)',
-        'cute-lg': '0 8px 24px rgba(255, 107, 157, 0.3)',
+        'cute': '0 4px 12px rgba(20, 90, 70, 0.1)',
+        'cute-lg': '0 8px 24px rgba(20, 90, 70, 0.15)',
       },
       animation: {
         'float': 'float 3s ease-in-out infinite',

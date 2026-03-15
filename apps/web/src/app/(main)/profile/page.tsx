@@ -49,26 +49,26 @@ export default function ProfilePage() {
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-3 gap-4 mb-6 border-t-2 border-pink-100 pt-6">
+          <div className="grid grid-cols-3 gap-4 mb-6 border-t-2 border-gray-100 pt-6">
             <div className="text-center">
-              <p className="text-2xl font-bold text-pink-600">👥</p>
+              <p className="text-2xl font-bold text-[#145A46]">👥</p>
               <p className="text-lg font-bold text-gray-800">0</p>
               <p className="text-xs text-gray-500">{t('friendship.friends')}</p>
             </div>
             <div className="text-center">
-              <p className="text-2xl font-bold text-pink-600">👁️</p>
+              <p className="text-2xl font-bold text-[#145A46]">👁️</p>
               <p className="text-lg font-bold text-gray-800">{visitorCount}</p>
               <p className="text-xs text-gray-500">{t('minihome.visitors')}</p>
             </div>
             <div className="text-center">
-              <p className="text-2xl font-bold text-pink-600">📅</p>
+              <p className="text-2xl font-bold text-[#145A46]">📅</p>
               <p className="text-lg font-bold text-gray-800">1</p>
               <p className="text-xs text-gray-500">{t('profile.joinDays')}</p>
             </div>
           </div>
 
           {/* Currency */}
-          <div className="grid grid-cols-2 gap-3 mb-6 bg-gradient-to-r from-pink-50 to-yellow-50 rounded-2xl p-4">
+          <div className="grid grid-cols-2 gap-3 mb-6 bg-gradient-to-r from-emerald-50 to-green-50 rounded-2xl p-4">
             <div className="text-center">
               <p className="text-2xl mb-1">💎</p>
               <p className="text-lg font-bold text-gray-800">{user.gems}</p>

@@ -14,7 +14,7 @@
   color: #999;
   background: linear-gradient(135deg, #fff 0%, #fff9f5 100%);
   border-radius: 15px;
-  border: 2px dashed #FFE6F0;
+  border: 2px dashed #E8F5E9;
 }
 
 .emptySubtext {
@@ -27,13 +27,13 @@
   background: linear-gradient(135deg, #fff 0%, #fff9f5 100%);
   border-radius: 15px;
   padding: 12px;
-  border: 2px solid #FFE6F0;
+  border: 2px solid #E8F5E9;
   transition: all 0.2s ease;
 }
 
 .entry:hover {
-  border-color: var(--primary-pink);
-  box-shadow: 0 2px 8px rgba(255, 107, 157, 0.15);
+  border-color: var(--primary-green);
+  box-shadow: 0 2px 8px rgba(20, 90, 70, 0.15);
 }
 
 .entryHeader {
@@ -77,10 +77,10 @@
   width: 24px;
   height: 24px;
   padding: 0;
-  background: #FFE6F0;
+  background: #E8F5E9;
   border: none;
   border-radius: 50%;
-  color: #FF6B9D;
+  color: #145A46;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -90,8 +90,8 @@
 }
 
 .deleteButton:hover {
-  background: #FFB6D9;
-  color: #E63384;
+  background: #C8E6C9;
+  color: #0d4a37;
 }
 
 .content {

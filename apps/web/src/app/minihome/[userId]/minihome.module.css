@@ -29,7 +29,7 @@
 .backButton {
   margin-top: 12px;
   padding: 8px 16px;
-  background: linear-gradient(135deg, #FF6B9D 0%, #FF8FB3 100%);
+  background: linear-gradient(135deg, #145A46 0%, #1B7A5A 100%);
   color: white;
   border: none;
   border-radius: 8px;
@@ -46,7 +46,7 @@
   display: flex;
   gap: 8px;
   margin: 12px 0;
-  border-bottom: 3px solid var(--primary-pink);
+  border-bottom: 3px solid var(--primary-green);
   overflow-x: auto;
   padding-bottom: 8px;
 }
@@ -67,12 +67,12 @@
 }
 
 .tab:hover {
-  color: #FF6B9D;
+  color: #145A46;
 }
 
 .tab.active {
-  color: #FF6B9D;
-  border-bottom-color: #FF6B9D;
+  color: #145A46;
+  border-bottom-color: #145A46;
 }
 
 .content {
@@ -95,13 +95,13 @@
   background: linear-gradient(135deg, #fff 0%, #fff9f5 100%);
   border-radius: 15px;
   padding: 16px;
-  border: 3px solid var(--primary-pink);
+  border: 3px solid var(--primary-green);
 }
 
 .sectionTitle {
   font-size: 16px;
   font-weight: 700;
-  color: #FF6B9D;
+  color: #145A46;
   margin: 0 0 12px 0;
 }
 
@@ -119,13 +119,13 @@
   padding: 8px;
   background: white;
   border-radius: 8px;
-  border-left: 3px solid var(--primary-pink);
+  border-left: 3px solid var(--primary-green);
 }
 
 .label {
   font-size: 11px;
   font-weight: 600;
-  color: #FF6B9D;
+  color: #145A46;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -166,7 +166,7 @@
   text-align: center;
   background: linear-gradient(135deg, #fff 0%, #fff9f5 100%);
   border-radius: 15px;
-  border: 2px dashed var(--primary-pink);
+  border: 2px dashed var(--primary-green);
   color: #999;
   font-size: 14px;
 }

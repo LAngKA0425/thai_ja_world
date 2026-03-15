@@ -77,7 +77,7 @@ export default function InventoryPage() {
           <p className="text-lg font-bold text-gray-800">{gems}</p>
           <p className="text-xs text-gray-500">{t('shop.stylePoints')}</p>
         </div>
-        <div className="w-px bg-pink-200"></div>
+        <div className="w-px bg-gray-200"></div>
         <div className="text-center">
           <div className="text-2xl mb-1">⭐</div>
           <p className="text-lg font-bold text-gray-800">{points}</p>

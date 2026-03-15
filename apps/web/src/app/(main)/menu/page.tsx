@@ -116,7 +116,7 @@ export default function MenuPage() {
                     <p className="font-bold text-gray-800">{item.label}</p>
                     <p className="text-sm text-gray-500">{item.description}</p>
                   </div>
-                  <span className="text-xl text-pink-600">›</span>
+                  <span className="text-xl text-[#145A46]">›</span>
                 </div>
               )
 
@@ -180,7 +180,7 @@ export default function MenuPage() {
                 }}
                 className={`flex-1 py-2 px-3 rounded-xl text-sm font-semibold transition-colors ${
                   getLocale() === lang.locale
-                    ? 'bg-pink-500 text-white'
+                    ? 'bg-[#145A46] text-white'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
               >
@@ -205,7 +205,7 @@ export default function MenuPage() {
                 <p className="font-bold text-gray-800">{t('menu.logout')}</p>
                 <p className="text-sm text-gray-500">{t('menu.logoutDescription')}</p>
               </div>
-              <span className="text-xl text-pink-600">›</span>
+              <span className="text-xl text-[#145A46]">›</span>
             </div>
           </button>
 
@@ -219,7 +219,7 @@ export default function MenuPage() {
                 <p className="font-bold text-gray-800">{t('menu.deleteAccount')}</p>
                 <p className="text-sm text-gray-500">{t('menu.deleteAccountDescription')}</p>
               </div>
-              <span className="text-xl text-pink-600">›</span>
+              <span className="text-xl text-[#145A46]">›</span>
             </div>
           </button>
         </div>

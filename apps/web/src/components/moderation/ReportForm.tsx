@@ -62,7 +62,7 @@ export function ReportForm({
     <div className="space-y-6">
       {/* Target user */}
       {targetUserName && (
-        <div className="cute-card p-4 bg-pink-50">
+        <div className="cute-card p-4 bg-emerald-50">
           <p className="text-sm text-gray-600 mb-1">{t('moderation.reportTarget')}</p>
           <p className="font-bold text-gray-800">{targetUserName}</p>
         </div>
@@ -104,7 +104,7 @@ export function ReportForm({
       {/* Evidence upload placeholder */}
       <div>
         <label className="block font-bold text-gray-800 mb-2">{t('moderation.evidenceImage')}</label>
-        <button className="w-full p-6 rounded-2xl border-2 border-dashed border-pink-200 hover:border-pink-400 transition-colors">
+        <button className="w-full p-6 rounded-2xl border-2 border-dashed border-gray-200 hover:border-[#145A46] transition-colors">
           <p className="text-3xl mb-2">📸</p>
           <p className="text-sm font-bold text-gray-700">{t('moderation.selectImage')}</p>
           <p className="text-xs text-gray-500">{t('moderation.evidenceDescription')}</p>

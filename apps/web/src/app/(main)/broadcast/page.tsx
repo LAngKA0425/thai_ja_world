@@ -105,7 +105,7 @@ export default function BroadcastPage() {
                   <div className="flex-1">
                     <p className="text-gray-800">{item.message}</p>
                     <div className="flex gap-2 mt-2">
-                      <span className="text-xs px-2 py-1 rounded-full bg-pink-100 text-pink-700 font-bold">
+                      <span className="text-xs px-2 py-1 rounded-full bg-emerald-50 text-[#145A46] font-bold">
                         {item.type === 'NORMAL' ? t('broadcast.normalBroadcast') : t('broadcast.premiumBroadcast')}
                       </span>
                       {item.itemId && (

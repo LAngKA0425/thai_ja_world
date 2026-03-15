@@ -75,7 +75,7 @@ export function ProfileEditor({ onClose }: ProfileEditorProps) {
               onClick={() => setSelectedAvatar(emoji)}
               className={`text-3xl p-3 rounded-2xl transition-all ${
                 selectedAvatar === emoji
-                  ? 'cute-card border-4 border-pink-400'
+                  ? 'cute-card border-4 border-[#145A46]'
                   : 'cute-card hover:shadow-lg'
               }`}
             >
@@ -90,7 +90,7 @@ export function ProfileEditor({ onClose }: ProfileEditorProps) {
               onClick={() => setSelectedAvatar(costume.id)}
               className={`text-3xl p-3 rounded-2xl transition-all ${
                 selectedAvatar === costume.id
-                  ? 'cute-card border-4 border-pink-400'
+                  ? 'cute-card border-4 border-[#145A46]'
                   : 'cute-card hover:shadow-lg'
               }`}
               title={costume.name}

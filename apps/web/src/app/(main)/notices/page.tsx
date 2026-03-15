@@ -80,14 +80,14 @@ export default function NoticesPage() {
                       {new Date(notice.createdAt).toLocaleDateString('ko-KR')}
                     </p>
                   </div>
-                  <span className="text-xl text-pink-600">
+                  <span className="text-xl text-[#145A46]">
                     {expandedId === notice.id ? '▼' : '▶'}
                   </span>
                 </div>
               </button>
 
               {expandedId === notice.id && (
-                <div className="mt-4 pt-4 border-t-2 border-pink-100">
+                <div className="mt-4 pt-4 border-t-2 border-gray-100">
                   <p className="text-gray-700 whitespace-pre-wrap leading-relaxed">
                     {notice.content}
                   </p>

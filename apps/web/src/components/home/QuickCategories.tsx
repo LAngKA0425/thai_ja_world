@@ -10,7 +10,7 @@ const categories = [
   { icon: '📑', label: '비자정보', href: '/community', color: 'bg-violet-50 text-violet-700' },
   { icon: '🛒', label: '중고마켓', href: '/community', color: 'bg-amber-50 text-amber-700' },
   { icon: '💼', label: '구인구직', href: '/community', color: 'bg-cyan-50 text-cyan-700' },
-  { icon: '🏠', label: '미니홈피', href: '/my', color: 'bg-pink-50 text-pink-700' },
+  { icon: '🏠', label: '미니홈피', href: '/my', color: 'bg-emerald-50 text-emerald-700' },
 ]
 
 export function QuickCategories() {

@@ -5,7 +5,7 @@
   background: linear-gradient(180deg, #E8F4F8 0%, #D4E8F0 100%);
   border-radius: 20px;
   overflow: hidden;
-  border: 3px solid var(--primary-pink);
+  border: 3px solid var(--primary-green);
   cursor: crosshair;
   user-select: none;
 }
@@ -122,10 +122,10 @@
 
 @keyframes myCharacterPulse {
   0%, 100% {
-    filter: drop-shadow(0 0 4px rgba(255, 107, 157, 0.3));
+    filter: drop-shadow(0 0 4px rgba(20, 90, 70, 0.3));
   }
   50% {
-    filter: drop-shadow(0 0 8px rgba(255, 107, 157, 0.6));
+    filter: drop-shadow(0 0 8px rgba(20, 90, 70, 0.6));
   }
 }
 
@@ -136,16 +136,16 @@
   justify-content: center;
   width: 48px;
   height: 48px;
-  background: linear-gradient(135deg, #FFB6D9 0%, #FFE66D 100%);
+  background: linear-gradient(135deg, #C8E6C9 0%, #FFE66D 100%);
   border-radius: 50%;
-  border: 3px solid #FF6B9D;
+  border: 3px solid #145A46;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   margin-bottom: 4px;
 }
 
 .myCharacter .avatar {
-  border-color: #FF6B9D;
-  box-shadow: 0 0 12px rgba(255, 107, 157, 0.5);
+  border-color: #145A46;
+  box-shadow: 0 0 12px rgba(20, 90, 70, 0.5);
 }
 
 .nickname {
@@ -164,7 +164,7 @@
 
 .status {
   font-size: 10px;
-  color: #FF6B9D;
+  color: #145A46;
   font-weight: bold;
   margin-top: 2px;
 }

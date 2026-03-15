@@ -12,7 +12,7 @@ const dummyPhotos = [
 const placeholderColors = [
   'from-emerald-100 to-teal-50',
   'from-amber-100 to-yellow-50',
-  'from-rose-100 to-pink-50',
+  'from-rose-100 to-red-50',
   'from-sky-100 to-blue-50',
   'from-violet-100 to-purple-50',
   'from-orange-100 to-amber-50',

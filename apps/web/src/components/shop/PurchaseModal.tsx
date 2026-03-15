@@ -31,7 +31,7 @@ export function PurchaseModal({
         <h2 className="text-xl font-bold text-gray-800 mb-4">{t('shop.confirmPurchase')}</h2>
 
         {/* Item preview */}
-        <div className="bg-gradient-to-br from-pink-50 to-yellow-50 rounded-2xl p-4 mb-6 text-center">
+        <div className="bg-gradient-to-br from-emerald-50 to-green-50 rounded-2xl p-4 mb-6 text-center">
           <div className="text-5xl mb-3">
             {{ top: '👕', bottom: '👖', shoes: '👟', accessory: '🎀', skin: '🎨', bgm: '🎵', effect: '✨', costume: '👔', background: '🖼️', furniture: '🪑', broadcast: '📢', starter: '🎁' }[item.category] || '🎁'}
           </div>

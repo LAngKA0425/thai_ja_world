@@ -72,7 +72,7 @@ export function InventoryItemCard({
       )}
 
       <div className="flex gap-2 mb-3 justify-center">
-        <span className="text-xs px-2 py-1 rounded-full bg-pink-100 text-pink-700 font-bold">
+        <span className="text-xs px-2 py-1 rounded-full bg-emerald-50 text-[#145A46] font-bold">
           {{ top: '상의', bottom: '하의', shoes: '신발', accessory: '악세서리', skin: '스킨', bgm: 'BGM', effect: '이펙트', costume: '코스튬', background: '배경', furniture: '가구', broadcast: '확성기' }[item.category] || item.category}
         </span>
       </div>
