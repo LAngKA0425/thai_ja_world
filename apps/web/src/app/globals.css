@@ -1,0 +1,185 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  overscroll-behavior-y: contain;
+}
+
+input, textarea, button, select {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+/* Scrollbar styling for mobile */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 107, 157, 0.05);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 107, 157, 0.3);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 107, 157, 0.5);
+}
+
+/* Cute theme CSS variables */
+:root {
+  --primary-pink: #FF6B9D;
+  --secondary-yellow: #FFE66D;
+  --accent-mint: #95E1D3;
+  --cute-pink: #FFB6D9;
+  --cute-peach: #FFD4A3;
+  --cute-purple: #D4A5FF;
+  --cute-blue: #A5D4FF;
+}
+
+/* SD Character style utilities */
+.character-shadow {
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+}
+
+.character-glow {
+  filter: drop-shadow(0 0 12px rgba(255, 107, 157, 0.3));
+}
+
+.cute-border {
+  border: 3px solid var(--primary-pink);
+  border-radius: 20px;
+}
+
+.cute-card {
+  background: linear-gradient(135deg, #fff 0%, #fff9f5 100%);
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(255, 107, 157, 0.2);
+  padding: 1.5rem;
+}
+
+.cute-button {
+  background: linear-gradient(135deg, #FF6B9D 0%, #FF8FB3 100%);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(255, 107, 157, 0.3);
+}
+
+.cute-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(255, 107, 157, 0.4);
+}
+
+.cute-button:active {
+  transform: translateY(0);
+}
+
+.cute-input {
+  border: 2px solid #FFE6F0;
+  border-radius: 15px;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.cute-input:focus {
+  outline: none;
+  border-color: var(--primary-pink);
+  box-shadow: 0 0 0 3px rgba(255, 107, 157, 0.1);
+}
+
+/* Gradient backgrounds */
+.gradient-pink-yellow {
+  background: linear-gradient(135deg, #FF6B9D 0%, #FFE66D 100%);
+}
+
+.gradient-mint-blue {
+  background: linear-gradient(135deg, #95E1D3 0%, #A5D4FF 100%);
+}
+
+.gradient-peach-pink {
+  background: linear-gradient(135deg, #FFD4A3 0%, #FF8FB3 100%);
+}
+
+/* Animation classes */
+@keyframes bounce-cute {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.bounce-cute {
+  animation: bounce-cute 1s ease-in-out;
+}
+
+@keyframes wiggle {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-3deg);
+  }
+  75% {
+    transform: rotate(3deg);
+  }
+}
+
+.wiggle {
+  animation: wiggle 0.5s ease-in-out;
+}
+
+/* Safe area padding for notched devices */
+@supports (padding: max(0px)) {
+  body {
+    padding-left: max(0px, env(safe-area-inset-left));
+    padding-right: max(0px, env(safe-area-inset-right));
+  }
+}
+
+/* Loading animation */
+.loading-spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid #FFE6F0;
+  border-top-color: var(--primary-pink);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Text selection color */
+::selection {
+  background-color: rgba(255, 107, 157, 0.3);
+  color: inherit;
+}

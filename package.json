@@ -1,0 +1,23 @@
+{
+  "name": "taeja-world",
+  "version": "0.0.0",
+  "private": true,
+  "description": "태자월드 모노레포 루트",
+  "scripts": {
+    "dev": "pnpm dev:local",
+    "dev:local": "concurrently -k -n web,socket,api \"pnpm --dir apps/web dev\" \"pnpm --dir apps/socket-server dev\" \"python -m uvicorn src.main:app --app-dir app/backend --reload --port 8000\"",
+    "dev:db": "docker compose -f docker-compose.dev.yml up -d postgres redis",
+    "dev:db:down": "docker compose -f docker-compose.dev.yml down",
+    "dev:docker": "docker compose -f docker-compose.dev.yml up --build",
+    "dev:docker:down": "docker compose -f docker-compose.dev.yml down",
+    "prod:up": "docker compose up -d --build",
+    "prod:down": "docker compose down",
+    "build": "turbo run build"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "turbo": "^2.8.15",
+    "typescript": "^5.9.3"
+  },
+  "packageManager": "pnpm@9.0.0"
+}

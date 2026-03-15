@@ -1,0 +1,259 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: #FF8A3D;
+  --accent: #FFE812;
+  --bg: #FFF9E6;
+  --text: #1a1a1a;
+  --brand-tae: #FFE812;
+  --brand-ja: #FF8A3D;
+  --community: #2EB67D;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  padding-bottom: 72px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@layer utilities {
+  .focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500;
+  }
+}
+
+.line-clamp-1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Brand accent underline */
+.brand-underline {
+  background-image: linear-gradient(120deg, #FFF794 0%, #FFE812 100%);
+  background-repeat: no-repeat;
+  background-size: 100% 0.3em;
+  background-position: 0 88%;
+}
+
+/* Section divider dot */
+.section-dot::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #FF8A3D;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+/* Brand gradient text */
+.text-brand-gradient {
+  background: linear-gradient(135deg, #FF8A3D 0%, #FFE812 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Warm background pattern */
+.bg-warm-pattern {
+  background-color: #FFF9E6;
+  background-image: radial-gradient(circle at 20% 50%, rgba(255, 232, 18, 0.06) 0%, transparent 50%),
+                    radial-gradient(circle at 80% 20%, rgba(255, 138, 61, 0.05) 0%, transparent 50%),
+                    radial-gradient(circle at 50% 80%, rgba(46, 182, 125, 0.04) 0%, transparent 50%);
+}
+
+/* Glass morphism card */
+.glass-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* Shimmer effect for loading */
+.shimmer {
+  background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ── NEW: Community Talk Marquee ── */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee 25s linear infinite;
+}
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* ── NEW: Gradient text for hero ── */
+.text-hero-gradient {
+  background: linear-gradient(135deg, #ffffff 0%, #FFF9E6 50%, #FFF5EC 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── NEW: Subtle card shine effect ── */
+.card-shine {
+  position: relative;
+  overflow: hidden;
+}
+.card-shine::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.03) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(30deg);
+  pointer-events: none;
+}
+
+/* ── NEW: Stagger animation delays ── */
+.stagger-1 { animation-delay: 0.05s; }
+.stagger-2 { animation-delay: 0.10s; }
+.stagger-3 { animation-delay: 0.15s; }
+.stagger-4 { animation-delay: 0.20s; }
+.stagger-5 { animation-delay: 0.25s; }
+.stagger-6 { animation-delay: 0.30s; }
+
+/* ── Hero Motion Layer ── */
+.hero-motion-layer {
+  z-index: 1;
+}
+
+.hero-orb {
+  position: absolute;
+  border-radius: 50%;
+  will-change: transform, opacity;
+  filter: blur(30px);
+}
+
+/* Orb 1: 큰 민트빛 blob */
+.hero-orb-1 {
+  width: 140px;
+  height: 140px;
+  background: radial-gradient(circle, rgba(255, 232, 18, 0.18) 0%, rgba(255, 138, 61, 0.05) 70%, transparent 100%);
+  top: -20%;
+  left: -10%;
+  animation: heroOrb1 12s ease-in-out infinite;
+}
+
+/* Orb 2: 중간 흰색 orb */
+.hero-orb-2 {
+  width: 100px;
+  height: 100px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.03) 70%, transparent 100%);
+  bottom: -10%;
+  right: 5%;
+  animation: heroOrb2 15s ease-in-out infinite;
+}
+
+/* Orb 3: 작은 accent 빛 orb */
+.hero-orb-3 {
+  width: 70px;
+  height: 70px;
+  background: radial-gradient(circle, rgba(46, 182, 125, 0.12) 0%, rgba(46, 182, 125, 0.03) 70%, transparent 100%);
+  top: 20%;
+  right: -5%;
+  animation: heroOrb3 10s ease-in-out infinite;
+}
+
+/* Shimmer sweep: 미세한 대각선 빛 줄기 */
+.hero-shimmer {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.04) 50%,
+    transparent 60%
+  );
+  animation: heroShimmer 8s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes heroOrb1 {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.7; }
+  25% { transform: translate(30px, 20px) scale(1.08); opacity: 0.9; }
+  50% { transform: translate(50px, 40px) scale(1.02); opacity: 0.75; }
+  75% { transform: translate(20px, 10px) scale(1.1); opacity: 0.85; }
+}
+
+@keyframes heroOrb2 {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.6; }
+  33% { transform: translate(-25px, -15px) scale(1.06); opacity: 0.8; }
+  66% { transform: translate(-10px, -30px) scale(0.97); opacity: 0.65; }
+}
+
+@keyframes heroOrb3 {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.5; }
+  30% { transform: translate(-20px, 15px) scale(1.12); opacity: 0.75; }
+  60% { transform: translate(-35px, 5px) scale(0.95); opacity: 0.6; }
+}
+
+@keyframes heroShimmer {
+  0%, 100% { transform: translateX(0); opacity: 0; }
+  40% { opacity: 0; }
+  50% { opacity: 1; }
+  60% { opacity: 0; }
+  70% { transform: translateX(350%); opacity: 0; }
+}
+
+/* ── Quick Actions Overlay ── */
+.quick-actions-backdrop {
+  animation: qaBdIn 0.2s ease-out;
+}
+.quick-actions-sheet {
+  animation: qaSheetIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes qaBdIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes qaSheetIn {
+  from { opacity: 0; transform: translateY(20px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}

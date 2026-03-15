@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(\"/c/Program Files/nodejs/npm.cmd\" install)",
+      "Bash(xargs ls -la)"
+    ]
+  }
+}

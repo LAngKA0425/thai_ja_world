@@ -1,0 +1,63 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 12px;
+  background: linear-gradient(180deg, #E8F4F8 0%, #D4E8F0 100%);
+}
+
+.loadingState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  background: linear-gradient(135deg, #fff 0%, #fff9f5 100%);
+  border-radius: 20px;
+  padding: 32px 16px;
+  text-align: center;
+  color: #999;
+}
+
+.backButton {
+  padding: 8px 12px;
+  background: #FFE6F0;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #FF6B9D;
+  cursor: pointer;
+  margin-bottom: 12px;
+  transition: all 0.2s ease;
+  align-self: flex-start;
+}
+
+.backButton:hover {
+  background: #FFB6D9;
+  color: #E63384;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #FF6B9D;
+  margin: 0 0 8px 0;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 640px) {
+  .container {
+    padding: 8px;
+  }
+
+  .title {
+    font-size: 18px;
+  }
+}

@@ -1,0 +1,521 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum UserRole {
+  USER
+  ADMIN
+  MODERATOR
+}
+
+enum UserStatus {
+  ACTIVE
+  BANNED
+  SUSPENDED
+  INACTIVE
+}
+
+enum ShopCategory {
+  STARTER_PACK
+  COSTUME
+  BROADCAST_ITEM
+  BACKGROUND
+  FURNITURE
+}
+
+enum CurrencyType {
+  GEMS
+  POINTS
+  STYLE_POINTS
+}
+
+enum BroadcastType {
+  NORMAL
+  PREMIUM
+}
+
+enum MinihomeTheme {
+  DEFAULT
+  PASTEL
+  DARK
+  COZY
+  MODERN
+  NATURAL
+}
+
+enum ReportReason {
+  HARASSMENT
+  SPAM
+  OFFENSIVE_CONTENT
+  SCAM
+  INAPPROPRIATE_USERNAME
+  IMPERSONATION
+  SEXUAL_CONTENT
+  VIOLENCE
+  OTHER
+}
+
+enum ReportStatus {
+  PENDING
+  REVIEWED
+  RESOLVED
+  DISMISSED
+}
+
+enum FriendStatus {
+  PENDING
+  ACCEPTED
+  BLOCKED
+  REJECTED
+}
+
+enum SanctionType {
+  WARNING
+  MUTE
+  TEMP_BAN
+  PERMANENT_BAN
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  CANCELLED
+  REFUNDED
+}
+
+enum TransactionType {
+  PURCHASE
+  REWARD
+  REFUND
+  ADMIN_ADJUSTMENT
+}
+
+enum ContentModerationStatus {
+  SAFE
+  REVIEW
+  BLOCKED
+}
+
+enum IncidentSeverity {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+model User {
+  id                    String     @id @default(cuid())
+  email                 String     @unique
+  passwordHash          String
+  nickname              String     @unique
+  nicknameNormalized    String
+  nicknameChosung       String
+  avatarId              String
+  role                  UserRole   @default(USER)
+  status                UserStatus @default(ACTIVE)
+  gems                  Int        @default(0)
+  points                Int        @default(5000)
+  locale                String     @default("ko")
+  createdAt             DateTime   @default(now())
+  updatedAt             DateTime   @updatedAt
+  lastLoginAt           DateTime?
+
+  profile               UserProfile?
+  minihome              Minihome?
+  activityScore         ActivityScore?
+  userTrustScore        UserTrustScore?
+  sentFriendRequests    Friendship[] @relation("senderId")
+  receivedFriendRequests Friendship[] @relation("recipientId")
+  sentReports           Report[] @relation("reporter")
+  receivedReports       Report[] @relation("reported")
+  blocks                Block[] @relation("blocker")
+  blockedBy             Block[] @relation("blocked")
+  guestbookEntries      GuestbookEntry[] @relation("visitor")
+  minihomeVisits        MinihomeVisit[]
+  inventoryItems        Inventory[]
+  transactions          Transaction[]
+  broadcasts            BroadcastLog[]
+  sessions              Session[]
+  sanctions             Sanction[] @relation("user")
+  createdSanctions      Sanction[] @relation("createdBy")
+  payments              PaymentIntent[]
+  notices               Notice[]
+  activityScoreLogs     ActivityScoreLog[]
+  reportedFeedbacks     TradePartnerFeedback[] @relation("feedbackReporter")
+  receivedFeedbacks     TradePartnerFeedback[] @relation("feedbackTarget")
+  communityPosts        CommunityPost[]
+
+  @@index([email])
+  @@index([nickname])
+  @@index([nicknameNormalized])
+  @@index([nicknameChosung])
+  @@index([status])
+  @@index([role])
+}
+
+model UserProfile {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bio       String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model Minihome {
+  id                 String    @id @default(cuid())
+  userId             String    @unique
+  user               User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  theme              MinihomeTheme @default(DEFAULT)
+  backgroundItemId   String?
+  backgroundItemName String?
+  visitCount         Int       @default(0)
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  slots              MinihomeSlot[]
+  guestbookEntries   GuestbookEntry[]
+  visits             MinihomeVisit[]
+
+  @@index([userId])
+}
+
+model MinihomeSlot {
+  id          String   @id @default(cuid())
+  minihomeId  String
+  minihome    Minihome @relation(fields: [minihomeId], references: [id], onDelete: Cascade)
+  slotIndex   Int
+  itemId      String?
+  itemName    String?
+  positionX   Int      @default(0)
+  positionY   Int      @default(0)
+  createdAt   DateTime @default(now())
+
+  @@unique([minihomeId, slotIndex])
+  @@index([minihomeId])
+}
+
+model GuestbookEntry {
+  id          String    @id @default(cuid())
+  minihomeId  String
+  minihome    Minihome  @relation(fields: [minihomeId], references: [id], onDelete: Cascade)
+  visitorId   String
+  visitor     User      @relation("visitor", fields: [visitorId], references: [id], onDelete: Cascade)
+  message     String    @db.VarChar(500)
+  createdAt   DateTime  @default(now())
+
+  @@index([minihomeId])
+  @@index([visitorId])
+}
+
+model MinihomeVisit {
+  id          String    @id @default(cuid())
+  minihomeId  String
+  minihome    Minihome  @relation(fields: [minihomeId], references: [id], onDelete: Cascade)
+  visitorId   String
+  visitor     User      @relation(fields: [visitorId], references: [id], onDelete: Cascade)
+  visitedAt   DateTime  @default(now())
+
+  @@unique([minihomeId, visitorId])
+  @@index([minihomeId])
+  @@index([visitorId])
+}
+
+model ShopItem {
+  id              String   @id @default(cuid())
+  name            String
+  description     String   @db.Text
+  category        ShopCategory
+  price           Int
+  currency        CurrencyType
+  imageUrl        String
+  isAvailable     Boolean  @default(true)
+  isLimited       Boolean  @default(false)
+  limitedQuantity Int?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  inventoryItems  Inventory[]
+  transactions    Transaction[]
+
+  @@index([category])
+  @@index([isAvailable])
+}
+
+model Inventory {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  itemId      String
+  item        ShopItem  @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  quantity    Int       @default(1)
+  acquiredAt  DateTime  @default(now())
+  expiresAt   DateTime?
+
+  @@unique([userId, itemId])
+  @@index([userId])
+  @@index([itemId])
+  @@index([expiresAt])
+}
+
+model Transaction {
+  id              String          @id @default(cuid())
+  userId          String
+  user            User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  itemId          String
+  item            ShopItem        @relation(fields: [itemId], references: [id])
+  amount          Int
+  currency        CurrencyType
+  transactionType TransactionType
+  status          String          @default("COMPLETED")
+  createdAt       DateTime        @default(now())
+
+  @@index([userId])
+  @@index([itemId])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model BroadcastLog {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  message   String   @db.VarChar(100)
+  type      BroadcastType
+  itemId    String?
+  sentAt    DateTime @default(now())
+
+  @@index([userId])
+  @@index([sentAt])
+}
+
+model Friendship {
+  id         String      @id @default(cuid())
+  senderId   String
+  sender     User        @relation("senderId", fields: [senderId], references: [id], onDelete: Cascade)
+  recipientId String
+  recipient  User        @relation("recipientId", fields: [recipientId], references: [id], onDelete: Cascade)
+  status     FriendStatus
+  message    String?     @db.VarChar(200)
+  createdAt  DateTime    @default(now())
+  respondedAt DateTime?
+  acceptedAt DateTime?
+  rejectedAt DateTime?
+  blockedAt  DateTime?
+
+  @@unique([senderId, recipientId])
+  @@index([senderId])
+  @@index([recipientId])
+  @@index([status])
+}
+
+model Block {
+  id            String   @id @default(cuid())
+  userId        String
+  user          User     @relation("blocker", fields: [userId], references: [id], onDelete: Cascade)
+  blockedUserId String
+  blockedUser   User     @relation("blocked", fields: [blockedUserId], references: [id], onDelete: Cascade)
+  reason        String?  @db.VarChar(300)
+  createdAt     DateTime @default(now())
+
+  @@unique([userId, blockedUserId])
+  @@index([userId])
+  @@index([blockedUserId])
+}
+
+model Report {
+  id                String       @id @default(cuid())
+  reporterId        String
+  reporter          User         @relation("reporter", fields: [reporterId], references: [id], onDelete: Cascade)
+  reportedUserId    String
+  reportedUser      User         @relation("reported", fields: [reportedUserId], references: [id], onDelete: Cascade)
+  reason            ReportReason
+  description       String       @db.Text
+  status            ReportStatus @default(PENDING)
+  evidence          String[]
+  reviewedBy        String?
+  reviewedAt        DateTime?
+  resolution        String?      @db.Text
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+
+  @@index([reporterId])
+  @@index([reportedUserId])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model Sanction {
+  id        String       @id @default(cuid())
+  userId    String
+  user      User         @relation("user", fields: [userId], references: [id], onDelete: Cascade)
+  type      SanctionType
+  reason    String       @db.Text
+  reportId  String?
+  duration  Int?
+  expiresAt DateTime?
+  createdBy String
+  creator   User         @relation("createdBy", fields: [createdBy], references: [id])
+  createdAt DateTime     @default(now())
+
+  @@index([userId])
+  @@index([type])
+  @@index([expiresAt])
+}
+
+model Notice {
+  id        String   @id @default(cuid())
+  title     String   @db.VarChar(200)
+  content   String   @db.Text
+  priority  String   @default("MEDIUM")
+  category  String
+  isActive  Boolean  @default(true)
+  startDate DateTime
+  endDate   DateTime?
+  createdBy String
+  creator   User     @relation(fields: [createdBy], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([isActive])
+  @@index([priority])
+  @@index([category])
+  @@index([startDate])
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+model PaymentIntent {
+  id            String        @id @default(cuid())
+  userId        String
+  user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  amount        Float
+  currency      String
+  status        PaymentStatus @default(PENDING)
+  paymentMethod String
+  transactionId String?
+  failureReason String?
+  createdAt     DateTime      @default(now())
+  completedAt   DateTime?
+
+  @@index([userId])
+  @@index([status])
+  @@index([createdAt])
+}
+
+// ──────────────────────────────────────────────
+// V1 LAUNCH: Activity Score System
+// ──────────────────────────────────────────────
+
+model ActivityScore {
+  id          String   @id @default(cuid())
+  userId      String   @unique
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  totalScore  Int      @default(0)
+  trustLevel  String   @default("NEW")
+  lastUpdated DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([userId])
+  @@index([trustLevel])
+  @@index([totalScore])
+}
+
+model ActivityScoreLog {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sourceType String
+  delta      Int
+  reason     String   @db.VarChar(500)
+  metadata   Json?
+  createdAt  DateTime @default(now())
+
+  @@index([userId])
+  @@index([sourceType])
+  @@index([createdAt])
+}
+
+// ──────────────────────────────────────────────
+// V1 LAUNCH: Marketplace Trust / Risk Foundation
+// ──────────────────────────────────────────────
+
+model TradePartnerFeedback {
+  id              String   @id @default(cuid())
+  tradeId         String?
+  reporterUserId  String
+  reporter        User     @relation("feedbackReporter", fields: [reporterUserId], references: [id], onDelete: Cascade)
+  targetUserId    String
+  target          User     @relation("feedbackTarget", fields: [targetUserId], references: [id], onDelete: Cascade)
+  feedbackType    String
+  description     String?  @db.Text
+  metadata        Json?
+  createdAt       DateTime @default(now())
+
+  @@index([reporterUserId])
+  @@index([targetUserId])
+  @@index([feedbackType])
+  @@index([createdAt])
+}
+
+model UserTrustScore {
+  id                String   @id @default(cuid())
+  userId            String   @unique
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  trustScore        Int      @default(100)
+  totalTrades       Int      @default(0)
+  positiveFeedbacks Int      @default(0)
+  negativeFeedbacks Int      @default(0)
+  riskFlag          Boolean  @default(false)
+  lastComputedAt    DateTime @default(now())
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([userId])
+  @@index([trustScore])
+  @@index([riskFlag])
+}
+
+// ──────────────────────────────────────────────
+// V1 LAUNCH: Community Posts & Content
+// ──────────────────────────────────────────────
+
+model CommunityPost {
+  id               String                 @id @default(cuid())
+  authorId         String
+  author           User                   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  category         String
+  title            String                 @db.VarChar(200)
+  content          String                 @db.Text
+  isAnonymous      Boolean                @default(false)
+  moderationStatus ContentModerationStatus @default(SAFE)
+  severity         IncidentSeverity?
+  viewCount        Int                    @default(0)
+  commentCount     Int                    @default(0)
+  createdAt        DateTime               @default(now())
+  updatedAt        DateTime               @updatedAt
+
+  @@index([authorId])
+  @@index([category])
+  @@index([moderationStatus])
+  @@index([createdAt])
+}

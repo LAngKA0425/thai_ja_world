@@ -1,0 +1,142 @@
+태자월드 Web Application - Complete Structure
+=============================================
+
+ROOT: /sessions/vibrant-eloquent-hamilton/mnt/taeja/apps/web/
+
+CONFIGURATION FILES:
+├── package.json                 - Dependencies and scripts
+├── tsconfig.json               - TypeScript configuration
+├── next.config.js              - Next.js configuration
+├── tailwind.config.ts          - Tailwind CSS theme config
+└── postcss.config.js           - PostCSS configuration
+
+SRC DIRECTORY: src/
+
+┌─ PAGES & LAYOUT
+│
+├── app/
+│   ├── layout.tsx              - Root layout (metadata, providers)
+│   ├── page.tsx                - Landing page (login/signup buttons)
+│   ├── globals.css             - Global styles + cute theme
+│   │
+│   ├── (auth)/                 - Public authentication routes
+│   │   ├── layout.tsx          - Centered card layout for auth
+│   │   ├── login/page.tsx      - Login form with validation
+│   │   └── signup/page.tsx     - Signup form with strength meter
+│   │
+│   └── (main)/                 - Protected application routes
+│       ├── layout.tsx          - Main app layout with top/bottom nav
+│       ├── plaza/page.tsx      - Social plaza (foundation)
+│       ├── shop/page.tsx       - Shop with categories and purchase
+│       ├── home/page.tsx       - Mini home with stats
+│       ├── friends/page.tsx    - Friends list and requests
+│       └── menu/page.tsx       - Settings and menu options
+│
+└── api/                        - API route handlers
+    ├── auth/
+    │   ├── signup/route.ts     - User registration
+    │   ├── login/route.ts      - User login
+    │   └── me/route.ts         - Current user info
+    │
+    ├── users/
+    │   └── [userId]/
+    │       ├── route.ts        - Get/update user profile
+    │       └── minihome/
+    │           ├── route.ts    - Get minihome data
+    │           └── guestbook/
+    │               └── route.ts - Guestbook GET/POST
+    │
+    ├── friends/
+    │   ├── route.ts            - List friends, send requests
+    │   └── [friendshipId]/route.ts - Accept/reject/remove
+    │
+    ├── shop/
+    │   ├── items/route.ts      - List shop items
+    │   └── purchase/route.ts   - Purchase items
+    │
+    ├── inventory/route.ts      - User inventory
+    │
+    ├── broadcast/route.ts      - Send/get broadcasts
+    │
+    ├── moderation/
+    │   ├── report/route.ts     - Report users
+    │   └── block/route.ts      - Block/unblock users
+    │
+    └── admin/
+        ├── users/route.ts      - Admin user list
+        ├── reports/route.ts    - Admin report management
+        ├── broadcasts/route.ts - Admin broadcast logs
+        └── notices/route.ts    - Admin notices management
+
+┌─ COMPONENTS
+│
+└── components/
+    └── layout/
+        ├── TopBar.tsx          - Header with gems/points/settings
+        └── BottomNav.tsx       - Bottom navigation with 5 tabs
+
+┌─ STATE MANAGEMENT (Zustand)
+│
+└── stores/
+    ├── auth-store.ts          - User auth state & methods
+    ├── plaza-store.ts         - Plaza users & chat messages
+    ├── inventory-store.ts     - Items, gems, points
+    └── friendship-store.ts    - Friends and requests
+
+┌─ UTILITIES & LIBRARIES
+│
+└── lib/
+    ├── api-client.ts          - Typed fetch wrapper
+    ├── socket-client.ts       - Socket.io initialization
+    ├── jwt.ts                 - JWT sign/verify functions
+    ├── i18n.ts                - Internationalization (ko/en/th)
+    ├── mock-db.ts             - In-memory database with seed data
+    └── socket-client.ts       - Socket.io event handlers
+
+┌─ PROVIDERS
+│
+└── providers/
+    └── index.tsx              - Auth provider initialization
+
+
+THEME & COLORS
+==============
+Primary:   #FF6B9D (Pink)
+Secondary: #FFE66D (Yellow)  
+Accent:    #95E1D3 (Mint)
+
+Mobile-first responsive design
+Cute animations and transitions
+Safe area support for notched devices
+
+
+KEY FEATURES
+============
+✅ Complete auth flow (signup/login/protected routes)
+✅ 22 fully functional API endpoints
+✅ In-memory mock database with seed data
+✅ JWT authentication with token persistence
+✅ Zustand state management (4 stores)
+✅ Mobile-responsive Tailwind CSS
+✅ Cute pink/yellow/mint theme
+✅ Form validation (client & server)
+✅ Password strength indicator
+✅ Admin role-based access
+✅ Friend request system
+✅ Shop with purchase logic
+✅ Broadcasting with cooldown
+✅ Moderation (block/report)
+✅ i18n ready (ko/en/th)
+✅ Socket.io ready for real-time
+
+
+GETTING STARTED
+===============
+npm install
+npm run dev
+
+Visit: http://localhost:3000
+
+Admin Account:
+  Email: admin@taeja.world
+  Password: admin123

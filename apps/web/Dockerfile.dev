@@ -1,0 +1,30 @@
+FROM node:22-alpine
+
+WORKDIR /app
+
+# Install pnpm
+RUN npm install -g pnpm@9
+
+# Copy root workspace config
+COPY package.json pnpm-workspace.yaml ./
+
+# Copy all package.json files first for caching
+COPY packages/shared/package.json packages/shared/package.json
+COPY packages/config/package.json packages/config/package.json
+COPY packages/locales/package.json packages/locales/package.json
+COPY packages/ui/package.json packages/ui/package.json
+COPY packages/db/package.json packages/db/package.json
+COPY apps/web/package.json apps/web/package.json
+
+# Install deps
+RUN pnpm install --no-frozen-lockfile
+
+# Copy source
+COPY packages/ packages/
+COPY apps/web/ apps/web/
+
+WORKDIR /app/apps/web
+
+EXPOSE 3000
+
+CMD ["npx", "next", "dev", "-p", "3000", "-H", "0.0.0.0"]

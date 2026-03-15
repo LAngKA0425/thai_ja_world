@@ -1,0 +1,182 @@
+.canvas {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  background: linear-gradient(180deg, #E8F4F8 0%, #D4E8F0 100%);
+  border-radius: 20px;
+  overflow: hidden;
+  border: 3px solid var(--primary-pink);
+  cursor: crosshair;
+  user-select: none;
+}
+
+.background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.tree {
+  position: absolute;
+  font-size: 32px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  opacity: 0.7;
+}
+
+.tree1 {
+  left: 5%;
+  top: 10%;
+}
+
+.tree2 {
+  right: 8%;
+  top: 15%;
+}
+
+.fountain {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 40px;
+  z-index: 1;
+  animation: bounce 2s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translate(-50%, -50%);
+  }
+  50% {
+    transform: translate(-50%, -55%);
+  }
+}
+
+.bench {
+  position: absolute;
+  font-size: 24px;
+  opacity: 0.6;
+}
+
+.bench1 {
+  left: 15%;
+  bottom: 15%;
+}
+
+.bench2 {
+  right: 12%;
+  bottom: 20%;
+}
+
+.flower {
+  position: absolute;
+  font-size: 20px;
+  opacity: 0.8;
+}
+
+.flower1 {
+  left: 25%;
+  top: 20%;
+}
+
+.flower2 {
+  right: 30%;
+  bottom: 10%;
+}
+
+.grass {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  font-size: 20px;
+  line-height: 30px;
+  overflow: hidden;
+  opacity: 0.4;
+  display: flex;
+  flex-wrap: wrap;
+  z-index: 0;
+}
+
+.character {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: transform 0.3s ease;
+  transform: translate(-50%, -50%);
+}
+
+.character:hover {
+  transform: translate(-50%, -60%);
+}
+
+.myCharacter {
+  z-index: 20;
+  animation: myCharacterPulse 2s ease-in-out infinite;
+}
+
+@keyframes myCharacterPulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 4px rgba(255, 107, 157, 0.3));
+  }
+  50% {
+    filter: drop-shadow(0 0 8px rgba(255, 107, 157, 0.6));
+  }
+}
+
+.avatar {
+  font-size: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, #FFB6D9 0%, #FFE66D 100%);
+  border-radius: 50%;
+  border: 3px solid #FF6B9D;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  margin-bottom: 4px;
+}
+
+.myCharacter .avatar {
+  border-color: #FF6B9D;
+  box-shadow: 0 0 12px rgba(255, 107, 157, 0.5);
+}
+
+.nickname {
+  font-size: 12px;
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 2px 6px;
+  border-radius: 8px;
+  white-space: nowrap;
+  max-width: 80px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.status {
+  font-size: 10px;
+  color: #FF6B9D;
+  font-weight: bold;
+  margin-top: 2px;
+}
+
+.onlineIndicator {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: #4CAF50;
+  border: 2px solid white;
+  border-radius: 50%;
+  top: -5px;
+  right: -5px;
+  box-shadow: 0 0 4px rgba(76, 175, 80, 0.6);
+}

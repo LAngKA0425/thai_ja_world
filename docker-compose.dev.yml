@@ -1,0 +1,125 @@
+name: taeja-world
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    networks:
+      - app
+    environment:
+      POSTGRES_USER: taeja
+      POSTGRES_PASSWORD: changeme
+      POSTGRES_DB: taeja
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U taeja"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    networks:
+      - app
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile.dev
+    networks:
+      - app
+    working_dir: /app/apps/web
+    command: npx next dev -p 3000 -H 0.0.0.0
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/apps/web/node_modules
+    environment:
+      - NODE_ENV=development
+      - SITE_URL=http://localhost:3000
+      - NEXT_PUBLIC_SITE_URL=http://localhost:3000
+      - NEXT_PUBLIC_SOCKET_URL=http://socket-server:3001
+      - NEXT_PUBLIC_API_URL=http://localhost:3000/api
+      - BACKEND_INTERNAL_URL=http://backend:8000
+      - BACKEND_INTERNAL_SECRET=${SECRET_KEY:-super-secret-change-me-in-production}
+    depends_on:
+      backend:
+        condition: service_healthy
+      socket-server:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+    restart: unless-stopped
+
+  backend:
+    build: ./app/backend
+    networks:
+      - app
+    ports:
+      - "8000:8000"
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql+asyncpg://taeja:changeme@postgres:5432/taeja
+      SYNC_DATABASE_URL: postgresql://taeja:changeme@postgres:5432/taeja
+      REDIS_URL: redis://redis:6379/0
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+    restart: unless-stopped
+
+  socket-server:
+    build:
+      context: .
+      dockerfile: apps/socket-server/Dockerfile.dev
+    networks:
+      - app
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./apps/socket-server/src:/app/src
+      - ./packages/shared:/app/node_modules/@taeja/shared
+    environment:
+      - NODE_ENV=development
+      - PORT=3001
+      - CORS_ORIGIN=http://localhost:3000
+      - JWT_SECRET=super-secret-change-me-in-production
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3001', (r) => {if (r.statusCode !== 404) process.exit(0); process.exit(1);})"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+    restart: unless-stopped
+
+volumes:
+  pgdata:
+
+networks:
+  app:
+    driver: bridge

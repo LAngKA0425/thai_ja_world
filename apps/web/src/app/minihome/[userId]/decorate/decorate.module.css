@@ -1,0 +1,159 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 12px;
+  background: linear-gradient(180deg, #E8F4F8 0%, #D4E8F0 100%);
+}
+
+.loadingState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  background: linear-gradient(135deg, #fff 0%, #fff9f5 100%);
+  border-radius: 20px;
+  padding: 32px 16px;
+  text-align: center;
+  color: #999;
+}
+
+.backButton {
+  padding: 8px 12px;
+  background: #FFE6F0;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #FF6B9D;
+  cursor: pointer;
+  margin-bottom: 12px;
+  transition: all 0.2s ease;
+  align-self: flex-start;
+}
+
+.backButton:hover {
+  background: #FFB6D9;
+  color: #E63384;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #FF6B9D;
+  margin: 0 0 8px 0;
+}
+
+.instructionsBox {
+  background: linear-gradient(135deg, #FFE66D 0%, #FFD4A3 100%);
+  border-radius: 12px;
+  padding: 12px;
+  text-align: center;
+  border: 2px solid #FFC640;
+}
+
+.instructionsBox p {
+  margin: 4px 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: #666;
+}
+
+.subtext {
+  font-size: 12px;
+  color: #888;
+  font-weight: 400;
+}
+
+.slotsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.noItems {
+  padding: 32px 16px;
+  background: linear-gradient(135deg, #fff 0%, #fff9f5 100%);
+  border-radius: 15px;
+  border: 2px dashed #FFE6F0;
+  text-align: center;
+  color: #999;
+}
+
+.noItems p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.noItemsSubtext {
+  font-size: 12px;
+  color: #bbb;
+  margin-top: 4px !important;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  padding: 12px 0;
+  border-top: 3px solid var(--primary-pink);
+}
+
+.saveButton,
+.resetButton {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.saveButton {
+  background: linear-gradient(135deg, #FF6B9D 0%, #FF8FB3 100%);
+  color: white;
+  box-shadow: 0 2px 6px rgba(255, 107, 157, 0.3);
+}
+
+.saveButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(255, 107, 157, 0.4);
+}
+
+.resetButton {
+  background: #FFE6F0;
+  color: #FF6B9D;
+}
+
+.resetButton:hover:not(:disabled) {
+  background: #FFB6D9;
+}
+
+.saveButton:disabled,
+.resetButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 640px) {
+  .container {
+    padding: 8px;
+  }
+
+  .title {
+    font-size: 18px;
+  }
+
+  .slotsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

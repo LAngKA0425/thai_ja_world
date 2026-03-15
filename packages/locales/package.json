@@ -1,0 +1,11 @@
+{
+  "name": "@taeja/locales",
+  "version": "0.1.0",
+  "private": true,
+  "main": "index.ts",
+  "exports": {
+    "./ko": "./ko/common.json",
+    "./en": "./en/common.json",
+    "./th": "./th/common.json"
+  }
+}

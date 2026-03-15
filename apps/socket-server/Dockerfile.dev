@@ -1,0 +1,17 @@
+FROM node:22-alpine
+
+WORKDIR /app
+
+# Copy socket-server package.json (strip workspace: protocol for standalone npm install)
+COPY apps/socket-server/package.json ./package.json
+RUN sed -i '/@taeja\/shared/d' package.json && npm install
+
+# Copy @taeja/shared into node_modules
+COPY packages/shared /app/node_modules/@taeja/shared
+
+COPY apps/socket-server/tsconfig.json ./
+COPY apps/socket-server/src/ src/
+
+EXPOSE 3001
+
+CMD ["npx", "ts-node-dev", "--respawn", "--transpile-only", "src/index.ts"]
