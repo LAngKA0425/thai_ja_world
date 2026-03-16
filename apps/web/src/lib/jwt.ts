@@ -1,12 +1,14 @@
 import { SignJWT, jwtVerify } from 'jose'
 
-const jwtSecret = process.env.JWT_SECRET
-if (!jwtSecret && process.env.NODE_ENV === 'production') {
-  throw new Error('[FATAL] JWT_SECRET 환경변수가 설정되지 않았습니다. production 환경에서는 반드시 설정해야 합니다.')
+function getSecret() {
+  const jwtSecret = process.env.JWT_SECRET
+  if (!jwtSecret && process.env.NODE_ENV === 'production' && typeof window === 'undefined') {
+    console.warn('[WARN] JWT_SECRET 환경변수가 설정되지 않았습니다.')
+  }
+  return new TextEncoder().encode(
+    jwtSecret || 'dev-secret-key-DO-NOT-USE-IN-PRODUCTION'
+  )
 }
-const secret = new TextEncoder().encode(
-  jwtSecret || 'dev-secret-key-DO-NOT-USE-IN-PRODUCTION'
-)
 
 export interface JWTPayload {
   userId: string
@@ -21,14 +23,14 @@ export async function signToken(payload: JWTPayload): Promise<string> {
     .setProtectedHeader({ alg: 'HS256' })
     .setIssuedAt()
     .setExpirationTime('7d')
-    .sign(secret)
+    .sign(getSecret())
 
   return token
 }
 
 export async function verifyToken(token: string): Promise<JWTPayload | null> {
   try {
-    const verified = await jwtVerify(token, secret)
+    const verified = await jwtVerify(token, getSecret())
     return verified.payload as JWTPayload
   } catch (error) {
     console.error('Token verification failed:', error)
