@@ -18,6 +18,9 @@ from src.core.api.v1.domain.guestbook.guestbook_router import router as guestboo
 from src.core.api.v1.domain.albums.albums_router import router as albums_router
 from src.core.api.v1.domain.ilchon.ilchon_router import router as ilchon_router
 from src.core.api.v1.domain.notifications.notifications_router import router as notifications_router
+from src.core.api.v1.cms_auth import router as cms_auth_router
+from src.core.api.v1.cms_news import router as cms_news_router
+from src.core.api.v1.cms_public import router as cms_public_router
 
 api_router = APIRouter(prefix="/api/v1")
 api_router.include_router(health_router)
@@ -36,3 +39,6 @@ api_router.include_router(guestbook_router)
 api_router.include_router(albums_router)
 api_router.include_router(ilchon_router)
 api_router.include_router(notifications_router)
+api_router.include_router(cms_auth_router)
+api_router.include_router(cms_news_router)
+api_router.include_router(cms_public_router)

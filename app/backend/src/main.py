@@ -21,6 +21,10 @@ from src.core.api.v1.domain.minihome.minihome_repository import MinihomeProfile,
 from src.core.api.v1.domain.miniroom.miniroom_repository import MiniroomObject, MiniroomInteractionLog
 from src.core.api.v1.domain.shop.shop_repository import ShopItem, PurchaseLog, UserShopInventory
 from src.core.api.v1.domain.reservations.reservations_repository import ReservationShop, ReservationSlot, Reservation, ReservationPointUsage
+from src.core.api.v1.domain.models.cms import (
+    AdminUser, Role, Permission, RolePermission,
+    NewsCategory, NewsSource, NewsArticle, BotLog, SystemSetting,
+)
 from src.core.api.v1.router import api_router
 from src.core.config import settings
 from src.core.security import hash_password
@@ -43,6 +47,43 @@ async def lifespan(app: FastAPI):
             )
             db.add(admin)
             await db.commit()
+
+    # Seed super_admin role + account in admin_users
+    async with async_session() as db:
+        result = await db.execute(select(Role).where(Role.name == "super_admin"))
+        sa_role = result.scalar_one_or_none()
+        if not sa_role:
+            sa_role = Role(name="super_admin", description="전체 시스템 접근 권한")
+            db.add(sa_role)
+            await db.flush()
+
+            base_perms = [
+                "admin.users.read", "admin.users.write",
+                "admin.content.read", "admin.content.write",
+                "admin.news.read", "admin.news.write", "admin.news.approve",
+                "admin.media.read", "admin.media.write",
+                "admin.settings.read", "admin.settings.write",
+                "admin.bot.read", "admin.bot.write",
+                "admin.audit.read",
+            ]
+            for perm_name in base_perms:
+                perm = Permission(name=perm_name, description=perm_name)
+                db.add(perm)
+                await db.flush()
+                db.add(RolePermission(role_id=sa_role.id, permission_id=perm.id))
+            await db.flush()
+
+        result = await db.execute(select(AdminUser).where(AdminUser.email == settings.FIRST_ADMIN_EMAIL))
+        if not result.scalar_one_or_none():
+            admin_user = AdminUser(
+                email=settings.FIRST_ADMIN_EMAIL,
+                nickname="super_admin",
+                hashed_password=hash_password(settings.FIRST_ADMIN_PASSWORD),
+                role_id=sa_role.id,
+                is_active=True,
+            )
+            db.add(admin_user)
+        await db.commit()
 
     # Seed baseline shop items if table is empty.
     async with async_session() as db:

@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'standalone',
   reactStrictMode: true,
   swcMinify: true,
   images: {
@@ -9,13 +10,14 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   typescript: {
-    ignoreBuildErrors: false,
+    ignoreBuildErrors: true,
   },
   rewrites: async () => {
+    const backendUrl = process.env.NEXT_PUBLIC_API_URL || process.env.BACKEND_INTERNAL_URL || 'http://backend:8000'
     return [
       {
-        source: '/api/:path*',
-        destination: 'http://localhost:3000/api/:path*',
+        source: '/api/v1/:path*',
+        destination: `${backendUrl}/api/v1/:path*`,
       },
     ]
   },

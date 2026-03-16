@@ -6,7 +6,9 @@ class AdminApiClient {
   private baseUrl: string
 
   constructor(baseUrl: string = '') {
-    this.baseUrl = baseUrl || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
+    // 브라우저에서는 상대 경로 사용 (Next.js rewrite가 backend로 프록시)
+    // NEXT_PUBLIC_API_URL은 서버사이드/Docker 내부용이므로 클라이언트에서 사용하면 안 됨
+    this.baseUrl = baseUrl || ''
   }
 
   private async request<T>(

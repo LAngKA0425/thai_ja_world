@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "collect": "node collector/collect.js",
+    "collect-pg": "node collector/collect-pg.js",
     "process": "node processor/process.js",
     "summarize": "node summarizer/summarize.js",
     "pipeline": "node scripts/run-pipeline.js",
@@ -16,6 +17,7 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.45.0",
+    "pg": "^8.13.0",
     "rss-parser": "^3.13.0",
     "node-fetch": "^3.3.2",
     "express": "^4.18.2",

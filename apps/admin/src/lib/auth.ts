@@ -17,7 +17,7 @@ const ADMIN_USER_KEY = 'admin_user'
 
 export async function loginAdmin(email: string, password: string): Promise<AuthResponse> {
   try {
-    const response = await adminApiClient.post<AuthResponse>('/api/auth/login', {
+    const response = await adminApiClient.post<AuthResponse>('/api/v1/admin/auth/login', {
       email,
       password,
     })
@@ -64,7 +64,7 @@ export async function verifyAdminAuth(): Promise<boolean> {
     const token = getAdminToken()
     if (!token) return false
 
-    await adminApiClient.get('/api/auth/me', { token })
+    await adminApiClient.get('/api/v1/admin/auth/me', { token })
     return true
   } catch {
     logoutAdmin()

@@ -1,0 +1,28 @@
+import os
+from dotenv import load_dotenv
+
+from app.models.admin import AdminUser
+from app.db import SessionLocal
+from app.core.security import hash_password
+
+load_dotenv()
+
+db = SessionLocal()
+
+username = os.getenv("ADMIN_USERNAME")
+email = os.getenv("ADMIN_EMAIL")
+password = os.getenv("ADMIN_PASSWORD")
+display_name = os.getenv("ADMIN_DISPLAY_NAME")
+
+admin = AdminUser(
+    username=username,
+    email=email,
+    hashed_password=hash_password(password),
+    display_name=display_name,
+    role="super_admin"
+)
+
+db.add(admin)
+db.commit()
+
+print("✅ Super admin account created")
