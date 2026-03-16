@@ -64,7 +64,31 @@ export default function AdminPage() {
   const [deleteTarget, setDeleteTarget] = useState<Post | null>(null)
 
   // 탭
-  const [tab, setTab] = useState<'posts' | 'local' | 'stats'>('posts')
+  const [tab, setTab] = useState<'dashboard' | 'posts' | 'local'>('dashboard')
+
+  // 대시보드 통계
+  interface DashboardUser {
+    id: string
+    nickname: string
+    email: string
+    createdAt: string
+    lastLoginAt: string | null
+    lastActiveLabel: string
+  }
+  interface DashboardStats {
+    totalUsers: number
+    onlineUsers: number
+    activeUsers24h: number
+    newUsersToday: number
+    postsToday: number
+    commentsToday: number
+    pendingReports: number
+    recentUsers: DashboardUser[]
+    recentActiveUsers: DashboardUser[]
+  }
+  const [dashboardStats, setDashboardStats] = useState<DashboardStats | null>(null)
+  const [dashboardLoading, setDashboardLoading] = useState(false)
+  const [dashboardError, setDashboardError] = useState('')
 
   // 로컬추천 관리
   const [localBiz, setLocalBiz] = useState<any[]>([])
@@ -200,6 +224,31 @@ export default function AdminPage() {
     if (isLoggedIn && tab === 'local') fetchLocal()
   }, [isLoggedIn, tab, fetchLocal])
 
+  const fetchDashboard = useCallback(async () => {
+    if (!token) return
+    setDashboardLoading(true)
+    setDashboardError('')
+    try {
+      const res = await fetch('/api/admin/stats', {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      if (!res.ok) {
+        setDashboardError('통계 데이터를 불러올 수 없습니다')
+        setDashboardLoading(false)
+        return
+      }
+      const data = await res.json()
+      setDashboardStats(data)
+    } catch {
+      setDashboardError('서버 연결 실패')
+    }
+    setDashboardLoading(false)
+  }, [token])
+
+  useEffect(() => {
+    if (isLoggedIn && tab === 'dashboard') fetchDashboard()
+  }, [isLoggedIn, tab, fetchDashboard])
+
   const resetLocalForm = () => {
     setLocalForm({
       name: '', category: '맛집', region: '방콕', address: '', priceRange: '',
@@ -330,6 +379,11 @@ export default function AdminPage() {
           }}>총 {total}건</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+          <button onClick={() => setTab('dashboard')} style={{
+            background: tab === 'dashboard' ? 'rgba(255,255,255,0.2)' : 'transparent',
+            color: '#fff', border: 'none', padding: '6px 14px', borderRadius: 6,
+            cursor: 'pointer', fontSize: 14
+          }}>대시보드</button>
           <button onClick={() => setTab('posts')} style={{
             background: tab === 'posts' ? 'rgba(255,255,255,0.2)' : 'transparent',
             color: '#fff', border: 'none', padding: '6px 14px', borderRadius: 6,
@@ -340,11 +394,6 @@ export default function AdminPage() {
             color: '#fff', border: 'none', padding: '6px 14px', borderRadius: 6,
             cursor: 'pointer', fontSize: 14
           }}>로컬추천</button>
-          <button onClick={() => setTab('stats')} style={{
-            background: tab === 'stats' ? 'rgba(255,255,255,0.2)' : 'transparent',
-            color: '#fff', border: 'none', padding: '6px 14px', borderRadius: 6,
-            cursor: 'pointer', fontSize: 14
-          }}>통계</button>
           <button onClick={handleLogout} style={{
             background: 'rgba(255,255,255,0.15)', color: '#fff', border: 'none',
             padding: '6px 14px', borderRadius: 6, cursor: 'pointer', fontSize: 13
@@ -682,26 +731,168 @@ export default function AdminPage() {
           </>
         )}
 
-        {tab === 'stats' && (
-          <div style={{
-            background: '#fff', borderRadius: 10, padding: 32,
-            boxShadow: '0 1px 4px rgba(0,0,0,0.06)'
-          }}>
-            <h2 style={{ fontSize: 18, fontWeight: 700, marginBottom: 20, color: '#1a1a1a' }}>게시글 통계</h2>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 16 }}>
-              {Object.entries(CATEGORIES).filter(([k]) => k).map(([cat, label]) => {
-                const count = posts.filter(p => p.category === cat).length
-                return (
-                  <div key={cat} style={{
-                    background: '#f9f9f9', borderRadius: 8, padding: '16px 20px',
-                    textAlign: 'center'
+        {tab === 'dashboard' && (
+          <div>
+            {dashboardLoading && (
+              <div style={{
+                background: '#fff', borderRadius: 10, padding: 40,
+                boxShadow: '0 1px 4px rgba(0,0,0,0.06)', textAlign: 'center', color: '#888'
+              }}>불러오는 중...</div>
+            )}
+
+            {dashboardError && !dashboardLoading && (
+              <div style={{
+                background: '#fff', borderRadius: 10, padding: 32,
+                boxShadow: '0 1px 4px rgba(0,0,0,0.06)', textAlign: 'center'
+              }}>
+                <div style={{ color: '#e53e3e', fontSize: 14, marginBottom: 12 }}>{dashboardError}</div>
+                <button onClick={fetchDashboard} style={{
+                  padding: '8px 20px', background: '#145A46', color: '#fff',
+                  border: 'none', borderRadius: 6, fontSize: 14, cursor: 'pointer'
+                }}>다시 시도</button>
+              </div>
+            )}
+
+            {!dashboardLoading && !dashboardError && dashboardStats && (
+              <>
+                {/* KPI 카드 */}
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: 12, marginBottom: 20 }}>
+                  {[
+                    { label: '총 사용자', value: dashboardStats.totalUsers, color: '#145A46', bg: '#e8f5e9' },
+                    { label: '현재 접속자', value: dashboardStats.onlineUsers, color: '#1565c0', bg: '#e3f2fd' },
+                    { label: '24시간 활성', value: dashboardStats.activeUsers24h, color: '#6a1b9a', bg: '#f3e5f5' },
+                    { label: '오늘 가입', value: dashboardStats.newUsersToday, color: '#ef6c00', bg: '#fff3e0' },
+                    { label: '오늘 게시글', value: dashboardStats.postsToday, color: '#2e7d32', bg: '#e8f5e9' },
+                    { label: '오늘 댓글', value: dashboardStats.commentsToday, color: '#00838f', bg: '#e0f7fa' },
+                    { label: '신고 대기', value: dashboardStats.pendingReports, color: dashboardStats.pendingReports > 0 ? '#c62828' : '#888', bg: dashboardStats.pendingReports > 0 ? '#ffebee' : '#f5f5f5' },
+                  ].map((kpi) => (
+                    <div key={kpi.label} style={{
+                      background: '#fff', borderRadius: 10, padding: '16px 20px',
+                      boxShadow: '0 1px 4px rgba(0,0,0,0.06)'
+                    }}>
+                      <div style={{ fontSize: 28, fontWeight: 700, color: kpi.color }}>{kpi.value}</div>
+                      <div style={{ fontSize: 13, color: '#666', marginTop: 4 }}>{kpi.label}</div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* 새로고침 버튼 */}
+                <div style={{ textAlign: 'right', marginBottom: 16 }}>
+                  <button onClick={fetchDashboard} style={{
+                    padding: '6px 16px', background: '#eee', color: '#333',
+                    border: 'none', borderRadius: 6, fontSize: 13, cursor: 'pointer'
+                  }}>새로고침</button>
+                </div>
+
+                {/* 리스트 영역 */}
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+                  {/* 최근 가입 사용자 */}
+                  <div style={{
+                    background: '#fff', borderRadius: 10, overflow: 'hidden',
+                    boxShadow: '0 1px 4px rgba(0,0,0,0.06)'
                   }}>
-                    <div style={{ fontSize: 24, fontWeight: 700, color: '#145A46' }}>{count}</div>
-                    <div style={{ fontSize: 13, color: '#666', marginTop: 4 }}>{label}</div>
+                    <div style={{
+                      padding: '14px 20px', borderBottom: '1px solid #eee',
+                      fontWeight: 700, fontSize: 15, color: '#1a1a1a'
+                    }}>최근 가입 사용자</div>
+                    {dashboardStats.recentUsers.length === 0 ? (
+                      <div style={{ padding: 24, textAlign: 'center', color: '#999', fontSize: 14 }}>
+                        가입 사용자가 없습니다
+                      </div>
+                    ) : (
+                      <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
+                        <thead>
+                          <tr style={{ background: '#f9f9f9' }}>
+                            <th style={{ padding: '8px 14px', textAlign: 'left', fontWeight: 600 }}>닉네임</th>
+                            <th style={{ padding: '8px 14px', textAlign: 'left', fontWeight: 600 }}>이메일</th>
+                            <th style={{ padding: '8px 14px', textAlign: 'center', fontWeight: 600 }}>가입일</th>
+                            <th style={{ padding: '8px 14px', textAlign: 'center', fontWeight: 600 }}>마지막 접속</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {dashboardStats.recentUsers.map((user) => (
+                            <tr key={user.id} style={{ borderBottom: '1px solid #f0f0f0' }}>
+                              <td style={{ padding: '8px 14px', fontWeight: 500, color: '#1a1a1a' }}>
+                                {user.nickname || '-'}
+                              </td>
+                              <td style={{ padding: '8px 14px', color: '#666', fontSize: 12 }}>
+                                {user.email || '-'}
+                              </td>
+                              <td style={{ padding: '8px 14px', textAlign: 'center', color: '#888', fontSize: 12 }}>
+                                {user.createdAt ? formatDate(user.createdAt) : '-'}
+                              </td>
+                              <td style={{ padding: '8px 14px', textAlign: 'center', fontSize: 12 }}>
+                                <span style={{
+                                  padding: '2px 8px', borderRadius: 4,
+                                  background: user.lastLoginAt ? '#e8f5e9' : '#f5f5f5',
+                                  color: user.lastLoginAt ? '#2e7d32' : '#999',
+                                  fontSize: 11
+                                }}>
+                                  {user.lastActiveLabel}
+                                </span>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    )}
                   </div>
-                )
-              })}
-            </div>
+
+                  {/* 최근 활동 사용자 */}
+                  <div style={{
+                    background: '#fff', borderRadius: 10, overflow: 'hidden',
+                    boxShadow: '0 1px 4px rgba(0,0,0,0.06)'
+                  }}>
+                    <div style={{
+                      padding: '14px 20px', borderBottom: '1px solid #eee',
+                      fontWeight: 700, fontSize: 15, color: '#1a1a1a'
+                    }}>최근 활동 사용자</div>
+                    {dashboardStats.recentActiveUsers.length === 0 ? (
+                      <div style={{ padding: 24, textAlign: 'center', color: '#999', fontSize: 14 }}>
+                        활동 사용자가 없습니다
+                      </div>
+                    ) : (
+                      <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
+                        <thead>
+                          <tr style={{ background: '#f9f9f9' }}>
+                            <th style={{ padding: '8px 14px', textAlign: 'left', fontWeight: 600 }}>닉네임</th>
+                            <th style={{ padding: '8px 14px', textAlign: 'left', fontWeight: 600 }}>이메일</th>
+                            <th style={{ padding: '8px 14px', textAlign: 'center', fontWeight: 600 }}>마지막 접속</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {dashboardStats.recentActiveUsers.map((user) => (
+                            <tr key={user.id} style={{ borderBottom: '1px solid #f0f0f0' }}>
+                              <td style={{ padding: '8px 14px', fontWeight: 500, color: '#1a1a1a' }}>
+                                {user.nickname || '-'}
+                              </td>
+                              <td style={{ padding: '8px 14px', color: '#666', fontSize: 12 }}>
+                                {user.email || '-'}
+                              </td>
+                              <td style={{ padding: '8px 14px', textAlign: 'center', fontSize: 12 }}>
+                                <span style={{
+                                  padding: '2px 8px', borderRadius: 4,
+                                  background: '#e3f2fd', color: '#1565c0', fontSize: 11
+                                }}>
+                                  {user.lastActiveLabel}
+                                </span>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    )}
+                  </div>
+                </div>
+              </>
+            )}
+
+            {!dashboardLoading && !dashboardError && !dashboardStats && (
+              <div style={{
+                background: '#fff', borderRadius: 10, padding: 40,
+                boxShadow: '0 1px 4px rgba(0,0,0,0.06)', textAlign: 'center', color: '#888'
+              }}>데이터가 없습니다</div>
+            )}
           </div>
         )}
       </div>

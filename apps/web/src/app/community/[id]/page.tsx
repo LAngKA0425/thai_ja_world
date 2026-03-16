@@ -1,8 +1,9 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { useAuthStore } from '@/stores/auth-store'
 
 const categoryColors: Record<string, string> = {
   briefing: 'bg-[#145A46] text-white',
@@ -27,12 +28,45 @@ interface PostDetail {
   updatedAt: string
 }
 
+interface CommentItem {
+  id: string
+  postId: string
+  authorId: string
+  authorNickname: string
+  content: string
+  createdAt: string
+  updatedAt: string
+}
+
 export default function PostDetailPage() {
   const params = useParams()
   const router = useRouter()
+  const { user, token, isAuthenticated } = useAuthStore()
   const [post, setPost] = useState<PostDetail | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+
+  const [comments, setComments] = useState<CommentItem[]>([])
+  const [commentsLoading, setCommentsLoading] = useState(false)
+  const [commentInput, setCommentInput] = useState('')
+  const [commentSubmitting, setCommentSubmitting] = useState(false)
+  const [commentError, setCommentError] = useState('')
+  const [deletingId, setDeletingId] = useState<string | null>(null)
+
+  const fetchComments = useCallback(async (postId: string) => {
+    setCommentsLoading(true)
+    try {
+      const res = await fetch(`/api/community/posts/${postId}/comments`)
+      if (res.ok) {
+        const data = await res.json()
+        setComments(data)
+      }
+    } catch {
+      // silent
+    } finally {
+      setCommentsLoading(false)
+    }
+  }, [])
 
   useEffect(() => {
     if (!params.id) return
@@ -41,9 +75,63 @@ export default function PostDetailPage() {
         if (!res.ok) throw new Error('not found')
         return res.json()
       })
-      .then(data => { setPost(data); setLoading(false) })
+      .then(data => {
+        setPost(data)
+        setLoading(false)
+        fetchComments(data.id)
+      })
       .catch(() => { setError('게시글을 찾을 수 없습니다'); setLoading(false) })
-  }, [params.id])
+  }, [params.id, fetchComments])
+
+  const handleSubmitComment = async () => {
+    if (!post || !token || commentSubmitting) return
+    const trimmed = commentInput.trim()
+    if (!trimmed) return
+    setCommentSubmitting(true)
+    setCommentError('')
+    try {
+      const res = await fetch(`/api/community/posts/${post.id}/comments`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({ content: trimmed }),
+      })
+      const data = await res.json()
+      if (!res.ok) {
+        setCommentError(data.error || data.message || '댓글 작성에 실패했습니다')
+        return
+      }
+      setCommentInput('')
+      setComments(prev => [...prev, data])
+      setPost(prev => prev ? { ...prev, commentCount: data.commentCount ?? (prev.commentCount + 1) } : prev)
+    } catch {
+      setCommentError('댓글 작성 중 오류가 발생했습니다')
+    } finally {
+      setCommentSubmitting(false)
+    }
+  }
+
+  const handleDeleteComment = async (commentId: string) => {
+    if (!post || !token || deletingId) return
+    setDeletingId(commentId)
+    try {
+      const res = await fetch(`/api/community/posts/${post.id}/comments/${commentId}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` },
+      })
+      const data = await res.json()
+      if (res.ok) {
+        setComments(prev => prev.filter(c => c.id !== commentId))
+        setPost(prev => prev ? { ...prev, commentCount: data.commentCount ?? Math.max(prev.commentCount - 1, 0) } : prev)
+      }
+    } catch {
+      // silent
+    } finally {
+      setDeletingId(null)
+    }
+  }
 
   const formatDate = (dateStr: string) => {
     const d = new Date(dateStr)
@@ -134,6 +222,92 @@ export default function PostDetailPage() {
             </button>
           </div>
         </article>
+
+        {/* Comments Section */}
+        <section className="mt-4 bg-white rounded-2xl border border-gray-100 overflow-hidden">
+          <div className="p-5 border-b border-gray-50">
+            <h2 className="text-sm font-bold text-[#1F2937]">
+              댓글 {post.commentCount > 0 ? post.commentCount : ''}
+            </h2>
+          </div>
+
+          {/* Comment Input */}
+          {isAuthenticated && user ? (
+            <div className="p-5 border-b border-gray-50">
+              <div className="flex gap-3">
+                <div className="w-8 h-8 rounded-full bg-[#145A46] flex items-center justify-center text-white text-[11px] font-bold flex-shrink-0 mt-0.5">
+                  {user.nickname?.charAt(0) || 'U'}
+                </div>
+                <div className="flex-1">
+                  <textarea
+                    value={commentInput}
+                    onChange={(e) => setCommentInput(e.target.value)}
+                    placeholder="댓글을 입력하세요..."
+                    maxLength={2000}
+                    rows={3}
+                    className="w-full px-3 py-2.5 text-[14px] text-[#374151] bg-gray-50 border border-gray-200 rounded-xl resize-none focus:outline-none focus:ring-1 focus:ring-[#145A46] focus:border-[#145A46] placeholder:text-[#9CA3AF]"
+                  />
+                  {commentError && (
+                    <p className="mt-1 text-[12px] text-red-500">{commentError}</p>
+                  )}
+                  <div className="mt-2 flex items-center justify-between">
+                    <span className="text-[11px] text-[#9CA3AF]">{commentInput.length}/2000</span>
+                    <button
+                      onClick={handleSubmitComment}
+                      disabled={commentSubmitting || !commentInput.trim()}
+                      className="px-4 py-1.5 bg-[#145A46] text-white text-[12px] font-semibold rounded-lg hover:bg-[#0D3D30] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                    >
+                      {commentSubmitting ? '등록 중...' : '등록'}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="p-5 border-b border-gray-50 text-center">
+              <p className="text-[13px] text-[#9CA3AF]">댓글을 작성하려면 로그인이 필요합니다</p>
+            </div>
+          )}
+
+          {/* Comment List */}
+          <div>
+            {commentsLoading ? (
+              <div className="p-5 text-center">
+                <p className="text-[13px] text-[#9CA3AF]">댓글을 불러오는 중...</p>
+              </div>
+            ) : comments.length === 0 ? (
+              <div className="p-5 text-center">
+                <p className="text-[13px] text-[#9CA3AF]">아직 댓글이 없습니다</p>
+              </div>
+            ) : (
+              comments.map((c) => (
+                <div key={c.id} className="px-5 py-4 border-b border-gray-50 last:border-b-0">
+                  <div className="flex items-start gap-3">
+                    <div className="w-7 h-7 rounded-full bg-gray-200 flex items-center justify-center text-[10px] font-bold text-[#6B7280] flex-shrink-0 mt-0.5">
+                      {c.authorNickname?.charAt(0) || '?'}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2">
+                        <span className="text-[13px] font-semibold text-[#374151]">{c.authorNickname}</span>
+                        <span className="text-[11px] text-[#9CA3AF]">{formatDate(c.createdAt)}</span>
+                      </div>
+                      <p className="mt-1 text-[14px] text-[#374151] leading-relaxed whitespace-pre-wrap break-words">{c.content}</p>
+                    </div>
+                    {user && (user.id === c.authorId) && (
+                      <button
+                        onClick={() => handleDeleteComment(c.id)}
+                        disabled={deletingId === c.id}
+                        className="text-[11px] text-[#9CA3AF] hover:text-red-500 flex-shrink-0 mt-1 transition-colors disabled:opacity-40"
+                      >
+                        {deletingId === c.id ? '삭제 중' : '삭제'}
+                      </button>
+                    )}
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+        </section>
 
         {/* Back to list */}
         <div className="mt-4 text-center">

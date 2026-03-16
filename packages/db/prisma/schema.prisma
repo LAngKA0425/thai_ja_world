@@ -150,6 +150,7 @@ model User {
   reportedFeedbacks     TradePartnerFeedback[] @relation("feedbackReporter")
   receivedFeedbacks     TradePartnerFeedback[] @relation("feedbackTarget")
   communityPosts        CommunityPost[]
+  comments              Comment[]
 
   @@index([email])
   @@index([nickname])
@@ -157,6 +158,8 @@ model User {
   @@index([nicknameChosung])
   @@index([status])
   @@index([role])
+  @@index([createdAt])
+  @@index([lastLoginAt])
 }
 
 model UserProfile {
@@ -496,6 +499,25 @@ model UserTrustScore {
 }
 
 // ──────────────────────────────────────────────
+// V1 LAUNCH: Community Comments
+// ──────────────────────────────────────────────
+
+model Comment {
+  id        String   @id @default(cuid())
+  postId    String
+  post      CommunityPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  content   String   @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([postId])
+  @@index([authorId])
+  @@index([createdAt])
+}
+
+// ──────────────────────────────────────────────
 // V1 LAUNCH: Community Posts & Content
 // ──────────────────────────────────────────────
 
@@ -513,6 +535,8 @@ model CommunityPost {
   commentCount     Int                    @default(0)
   createdAt        DateTime               @default(now())
   updatedAt        DateTime               @updatedAt
+
+  comments         Comment[]
 
   @@index([authorId])
   @@index([category])

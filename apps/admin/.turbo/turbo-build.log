@@ -6,33 +6,138 @@
   - Environments: .env.local
 
    Creating an optimized production build ...
-Failed to compile.
+ ✓ Compiled successfully
+   Skipping validation of types
+   Skipping linting
 
-./src/app/(dashboard)/broadcasts/page.tsx
-Module not found: Can't resolve '@/lib/ko'
+   We detected TypeScript in your project and reconfigured your tsconfig.json file for you. Strict-mode is set to false by default.
+   The following suggested values were added to your tsconfig.json. These values can be changed to fit your project's needs:
 
-https://nextjs.org/docs/messages/module-not-found
+   	- allowJs was set to true
+   	- noEmit was set to true
 
-./src/app/(dashboard)/dashboard/page.tsx
-Module not found: Can't resolve '@/lib/ko'
+   The following mandatory changes were made to your tsconfig.json:
 
-https://nextjs.org/docs/messages/module-not-found
+   	- moduleResolution was set to node (to match webpack resolution)
+   	- resolveJsonModule was set to true (to match webpack resolution)
+   	- isolatedModules was set to true (requirement for SWC / Babel)
 
-./src/app/(dashboard)/notices/page.tsx
-Module not found: Can't resolve '@/lib/ko'
+   Collecting page data ...
+   Generating static pages (0/12) ...
+ ⚠ Unsupported metadata viewport is configured in metadata export in /news. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ Unsupported metadata viewport is configured in metadata export in /news. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ Unsupported metadata viewport is configured in metadata export in /reports. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ Unsupported metadata viewport is configured in metadata export in /reports. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ Unsupported metadata viewport is configured in metadata export in /news/new. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ Unsupported metadata viewport is configured in metadata export in /news/new. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ Unsupported metadata viewport is configured in metadata export in /notices. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ Unsupported metadata viewport is configured in metadata export in /notices. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ Unsupported metadata viewport is configured in metadata export in /. Please move it to viewport export instead.
+   Generating static pages (3/12) 
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+   Generating static pages (6/12) 
+ ⚠ Unsupported metadata viewport is configured in metadata export in /. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ Unsupported metadata viewport is configured in metadata export in /dashboard. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ Unsupported metadata viewport is configured in metadata export in /dashboard. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ Unsupported metadata viewport is configured in metadata export in /users. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ Unsupported metadata viewport is configured in metadata export in /users. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ Unsupported metadata viewport is configured in metadata export in /broadcasts. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ Unsupported metadata viewport is configured in metadata export in /broadcasts. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ Unsupported metadata viewport is configured in metadata export in /notices/new. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ Unsupported metadata viewport is configured in metadata export in /notices/new. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ Unsupported metadata viewport is configured in metadata export in /_not-found. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ Unsupported metadata viewport is configured in metadata export in /_not-found. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+   Generating static pages (9/12) 
+ ✓ Generating static pages (12/12)
+   Finalizing page optimization ...
+   Collecting build traces ...
+ ⚠ Failed to copy traced files for C:\Users\LAngKA\dev\projrct\thai_ja_world\apps\admin\.next\server\pages\_app.js Error: EPERM: operation not permitted, symlink 'C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\react@18.3.1\node_modules\react' -> 'C:\Users\LAngKA\dev\projrct\thai_ja_world\apps\admin\.next\standalone\apps\admin\node_modules\react'
+    at async Object.symlink (node:internal/fs/promises:994:10)
+    at async C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\build\utils.js:1399:25
+    at async Promise.all (index 9)
+    at async handleTraceFiles (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\build\utils.js:1387:9)
+    at async copyTracedFiles (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\build\utils.js:1448:9)
+    at async C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\build\index.js:225:9
+    at async Span.traceAsyncFn (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\trace\trace.js:154:20)
+    at async writeStandaloneDirectory (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\build\index.js:224:5)
+    at async C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\build\index.js:2136:17
+    at async Span.traceAsyncFn (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\trace\trace.js:154:20) {
+  errno: -4048,
+  code: 'EPERM',
+  syscall: 'symlink',
+  path: 'C:\\Users\\LAngKA\\dev\\projrct\\thai_ja_world\\node_modules\\.pnpm\\react@18.3.1\\node_modules\\react',
+  dest: 'C:\\Users\\LAngKA\\dev\\projrct\\thai_ja_world\\apps\\admin\\.next\\standalone\\apps\\admin\\node_modules\\react'
+}
+ ⚠ Failed to copy traced files for C:\Users\LAngKA\dev\projrct\thai_ja_world\apps\admin\.next\server\pages\_error.js Error: EPERM: operation not permitted, symlink 'C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\react@18.3.1\node_modules\react' -> 'C:\Users\LAngKA\dev\projrct\thai_ja_world\apps\admin\.next\standalone\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\react'
+    at async Object.symlink (node:internal/fs/promises:994:10)
+    at async C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\build\utils.js:1399:25
+    at async Promise.all (index 13)
+    at async handleTraceFiles (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\build\utils.js:1387:9)
+    at async copyTracedFiles (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\build\utils.js:1448:9)
+    at async C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\build\index.js:225:9
+    at async Span.traceAsyncFn (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\trace\trace.js:154:20)
+    at async writeStandaloneDirectory (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\build\index.js:224:5)
+    at async C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\build\index.js:2136:17
+    at async Span.traceAsyncFn (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\trace\trace.js:154:20) {
+  errno: -4048,
+  code: 'EPERM',
+  syscall: 'symlink',
+  path: 'C:\\Users\\LAngKA\\dev\\projrct\\thai_ja_world\\node_modules\\.pnpm\\react@18.3.1\\node_modules\\react',
+  dest: 'C:\\Users\\LAngKA\\dev\\projrct\\thai_ja_world\\apps\\admin\\.next\\standalone\\node_modules\\.pnpm\\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\\node_modules\\react'
+}
+ ⚠ Failed to copy traced files for C:\Users\LAngKA\dev\projrct\thai_ja_world\apps\admin\.next\server\pages\_document.js Error: EPERM: operation not permitted, symlink 'C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next' -> 'C:\Users\LAngKA\dev\projrct\thai_ja_world\apps\admin\.next\standalone\apps\admin\node_modules\next'
+    at async Object.symlink (node:internal/fs/promises:994:10)
+    at async C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\build\utils.js:1399:25
+    at async Promise.all (index 37)
+    at async handleTraceFiles (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\build\utils.js:1387:9)
+    at async copyTracedFiles (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\build\utils.js:1448:9)
+    at async C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\build\index.js:225:9
+    at async Span.traceAsyncFn (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\trace\trace.js:154:20)
+    at async writeStandaloneDirectory (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\build\index.js:224:5)
+    at async C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\build\index.js:2136:17
+    at async Span.traceAsyncFn (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\trace\trace.js:154:20) {
+  errno: -4048,
+  code: 'EPERM',
+  syscall: 'symlink',
+  path: 'C:\\Users\\LAngKA\\dev\\projrct\\thai_ja_world\\node_modules\\.pnpm\\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\\node_modules\\next',
+  dest: 'C:\\Users\\LAngKA\\dev\\projrct\\thai_ja_world\\apps\\admin\\.next\\standalone\\apps\\admin\\node_modules\\next'
+}
 
-https://nextjs.org/docs/messages/module-not-found
-
-./src/app/(dashboard)/reports/page.tsx
-Module not found: Can't resolve '@/lib/ko'
-
-https://nextjs.org/docs/messages/module-not-found
-
-./src/app/(dashboard)/users/[userId]/page.tsx
-Module not found: Can't resolve '@/lib/ko'
-
-https://nextjs.org/docs/messages/module-not-found
-
-
-> Build failed because of webpack errors
+> Build error occurred
+Error: EPERM: operation not permitted, symlink 'C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\@next+env@14.2.0\node_modules\@next\env' -> 'C:\Users\LAngKA\dev\projrct\thai_ja_world\apps\admin\.next\standalone\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\@next\env'
+    at async Object.symlink (node:internal/fs/promises:994:10)
+    at async C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\build\utils.js:1399:25
+    at async Promise.all (index 86)
+    at async handleTraceFiles (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\build\utils.js:1387:9)
+    at async copyTracedFiles (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\build\utils.js:1469:5)
+    at async C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\build\index.js:225:9
+    at async Span.traceAsyncFn (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\trace\trace.js:154:20)
+    at async writeStandaloneDirectory (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\build\index.js:224:5)
+    at async C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\build\index.js:2136:17
+    at async Span.traceAsyncFn (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\trace\trace.js:154:20) {
+  errno: -4048,
+  code: 'EPERM',
+  syscall: 'symlink',
+  path: 'C:\\Users\\LAngKA\\dev\\projrct\\thai_ja_world\\node_modules\\.pnpm\\@next+env@14.2.0\\node_modules\\@next\\env',
+  dest: 'C:\\Users\\LAngKA\\dev\\projrct\\thai_ja_world\\apps\\admin\\.next\\standalone\\node_modules\\.pnpm\\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\\node_modules\\@next\\env'
+}
  ELIFECYCLE  Command failed with exit code 1.
