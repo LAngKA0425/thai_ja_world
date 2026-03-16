@@ -28,10 +28,10 @@ ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
 COPY --from=base /app/apps/admin/.next/standalone ./
-COPY --from=base /app/apps/admin/.next/static ./.next/static
+COPY --from=base /app/apps/admin/.next/static ./apps/admin/.next/static
 
 EXPOSE 3002
 ENV PORT=3002
 ENV HOSTNAME="0.0.0.0"
 
-CMD ["node", "server.js"]
+CMD ["node", "apps/admin/server.js"]
