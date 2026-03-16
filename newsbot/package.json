@@ -1,0 +1,25 @@
+{
+  "name": "tajworld-newsbot",
+  "version": "1.0.0",
+  "description": "태자월드 뉴스 자동 수집/요약/승인 봇",
+  "type": "module",
+  "scripts": {
+    "collect": "node collector/collect.js",
+    "process": "node processor/process.js",
+    "summarize": "node summarizer/summarize.js",
+    "pipeline": "node scripts/run-pipeline.js",
+    "weather": "node collector/weather.js",
+    "exchange": "node collector/exchange.js",
+    "daily": "node collector/weather.js && node collector/exchange.js",
+    "admin": "node admin/server.js",
+    "setup": "node scripts/setup.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.0",
+    "rss-parser": "^3.13.0",
+    "node-fetch": "^3.3.2",
+    "express": "^4.18.2",
+    "dotenv": "^16.4.5",
+    "difflib": "^0.2.4"
+  }
+}

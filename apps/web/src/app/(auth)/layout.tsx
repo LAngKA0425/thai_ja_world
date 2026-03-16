@@ -15,7 +15,7 @@ export default function AuthLayout({
 
   useEffect(() => {
     if (isAuthenticated) {
-      router.push('/plaza')
+      router.push('/')
     }
   }, [isAuthenticated, router])
 

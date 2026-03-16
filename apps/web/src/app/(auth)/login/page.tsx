@@ -61,7 +61,7 @@ export default function LoginPage() {
 
     try {
       await login(formData.email, formData.password)
-      router.push('/plaza')
+      router.push('/')
     } catch (error: any) {
       if (error.requiresVerification) {
         setVerificationNeeded(error.email || formData.email)
