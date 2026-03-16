@@ -74,12 +74,6 @@ export default function LoginPage() {
             로그인
           </Button>
         </form>
-
-        <div className="mt-8 p-4 bg-dark-sidebar rounded-lg">
-          <p className="text-xs text-dark-text-secondary mb-2 font-medium">테스트 계정</p>
-          <p className="text-xs text-dark-text">이메일: admin@taeja.com</p>
-          <p className="text-xs text-dark-text">비밀번호: admin123</p>
-        </div>
       </Card>
     </div>
   )

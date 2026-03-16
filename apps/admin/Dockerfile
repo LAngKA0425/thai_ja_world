@@ -19,6 +19,7 @@ COPY apps/admin/ apps/admin/
 
 # Build
 WORKDIR /app/apps/admin
+ENV NODE_ENV=production
 RUN npm run build
 
 FROM node:22-alpine AS runner

@@ -8,3 +8,179 @@
     · scrollRestoration
 
    Creating an optimized production build ...
+ ✓ Compiled successfully
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/41) ...
+Get broadcast logs error: q [Error]: Dynamic server usage: Route /api/admin/broadcasts couldn't be rendered statically because it accessed `request.headers`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at Object.get (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\next-server\app-route.runtime.prod.js:6:37970)
+    at c (C:\Users\LAngKA\dev\projrct\thai_ja_world\apps\web\.next\server\app\api\admin\broadcasts\route.js:1:708)
+    at C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\next-server\app-route.runtime.prod.js:6:34807
+    at C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\server\lib\trace\tracer.js:140:36
+    at NoopContextManager.with (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\@opentelemetry\api\index.js:1:7062)
+    at ContextAPI.with (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\@opentelemetry\api\index.js:1:518)
+    at NoopTracer.startActiveSpan (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\@opentelemetry\api\index.js:1:18093)
+    at ProxyTracer.startActiveSpan (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\@opentelemetry\api\index.js:1:18854)
+    at C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\server\lib\trace\tracer.js:122:103
+    at NoopContextManager.with (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\@opentelemetry\api\index.js:1:7062) {
+  description: "Route /api/admin/broadcasts couldn't be rendered statically because it accessed `request.headers`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+Auth check error: q [Error]: Dynamic server usage: Route /api/auth/me couldn't be rendered statically because it accessed `request.headers`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at Object.get (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\next-server\app-route.runtime.prod.js:6:37970)
+    at l (C:\Users\LAngKA\dev\projrct\thai_ja_world\apps\web\.next\server\app\api\auth\me\route.js:1:689)
+    at C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\next-server\app-route.runtime.prod.js:6:34807
+    at C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\server\lib\trace\tracer.js:140:36
+    at NoopContextManager.with (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\@opentelemetry\api\index.js:1:7062)
+    at ContextAPI.with (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\@opentelemetry\api\index.js:1:518)
+    at NoopTracer.startActiveSpan (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\@opentelemetry\api\index.js:1:18093)
+    at ProxyTracer.startActiveSpan (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\@opentelemetry\api\index.js:1:18854)
+    at C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\server\lib\trace\tracer.js:122:103
+    at NoopContextManager.with (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\@opentelemetry\api\index.js:1:7062) {
+  description: "Route /api/auth/me couldn't be rendered statically because it accessed `request.headers`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+Email verification error: q [Error]: Dynamic server usage: Route /api/auth/verify-email couldn't be rendered statically because it accessed `request.headers`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at Object.get (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\next-server\app-route.runtime.prod.js:6:37970)
+    at i (C:\Users\LAngKA\dev\projrct\thai_ja_world\apps\web\.next\server\app\api\auth\signup\route.js:28:750)
+    at d (C:\Users\LAngKA\dev\projrct\thai_ja_world\apps\web\.next\server\app\api\auth\verify-email\route.js:1:568)
+    at C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\next-server\app-route.runtime.prod.js:6:34807
+    at C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\server\lib\trace\tracer.js:140:36
+    at NoopContextManager.with (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\@opentelemetry\api\index.js:1:7062)
+    at ContextAPI.with (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\@opentelemetry\api\index.js:1:518)
+    at NoopTracer.startActiveSpan (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\@opentelemetry\api\index.js:1:18093)
+    at ProxyTracer.startActiveSpan (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\@opentelemetry\api\index.js:1:18854)
+    at C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\server\lib\trace\tracer.js:122:103 {
+  description: "Route /api/auth/verify-email couldn't be rendered statically because it accessed `request.headers`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+Get reports error: q [Error]: Dynamic server usage: Route /api/admin/reports couldn't be rendered statically because it accessed `request.headers`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at Object.get (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\next-server\app-route.runtime.prod.js:6:37970)
+    at c (C:\Users\LAngKA\dev\projrct\thai_ja_world\apps\web\.next\server\app\api\admin\reports\route.js:1:718)
+    at C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\next-server\app-route.runtime.prod.js:6:34807
+    at C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\server\lib\trace\tracer.js:140:36
+    at NoopContextManager.with (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\@opentelemetry\api\index.js:1:7062)
+    at ContextAPI.with (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\@opentelemetry\api\index.js:1:518)
+    at NoopTracer.startActiveSpan (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\@opentelemetry\api\index.js:1:18093)
+    at ProxyTracer.startActiveSpan (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\@opentelemetry\api\index.js:1:18854)
+    at C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\server\lib\trace\tracer.js:122:103
+    at NoopContextManager.with (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\@opentelemetry\api\index.js:1:7062) {
+  description: "Route /api/admin/reports couldn't be rendered statically because it accessed `request.headers`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+   Generating static pages (10/41) 
+Get users error: q [Error]: Dynamic server usage: Route /api/admin/users couldn't be rendered statically because it accessed `request.headers`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at Object.get (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\next-server\app-route.runtime.prod.js:6:37970)
+    at p (C:\Users\LAngKA\dev\projrct\thai_ja_world\apps\web\.next\server\app\api\admin\users\route.js:1:699)
+    at C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\next-server\app-route.runtime.prod.js:6:34807
+    at C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\server\lib\trace\tracer.js:140:36
+    at NoopContextManager.with (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\@opentelemetry\api\index.js:1:7062)
+    at ContextAPI.with (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\@opentelemetry\api\index.js:1:518)
+    at NoopTracer.startActiveSpan (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\@opentelemetry\api\index.js:1:18093)
+    at ProxyTracer.startActiveSpan (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\@opentelemetry\api\index.js:1:18854)
+    at C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\server\lib\trace\tracer.js:122:103
+    at NoopContextManager.with (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\@opentelemetry\api\index.js:1:7062) {
+  description: "Route /api/admin/users couldn't be rendered statically because it accessed `request.headers`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+Get inventory error: q [Error]: Dynamic server usage: Route /api/inventory couldn't be rendered statically because it accessed `request.headers`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at Object.get (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\next-server\app-route.runtime.prod.js:6:37970)
+    at c (C:\Users\LAngKA\dev\projrct\thai_ja_world\apps\web\.next\server\app\api\inventory\route.js:1:717)
+    at C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\next-server\app-route.runtime.prod.js:6:34807
+    at C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\server\lib\trace\tracer.js:140:36
+    at NoopContextManager.with (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\@opentelemetry\api\index.js:1:7062)
+    at ContextAPI.with (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\@opentelemetry\api\index.js:1:518)
+    at NoopTracer.startActiveSpan (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\@opentelemetry\api\index.js:1:18093)
+    at ProxyTracer.startActiveSpan (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\@opentelemetry\api\index.js:1:18854)
+    at C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\server\lib\trace\tracer.js:122:103
+    at NoopContextManager.with (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\@opentelemetry\api\index.js:1:7062) {
+  description: "Route /api/inventory couldn't be rendered statically because it accessed `request.headers`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+   Generating static pages (20/41) 
+   Generating static pages (30/41) 
+Get shop items error: q [Error]: Dynamic server usage: Route /api/shop/items couldn't be rendered statically because it accessed `nextUrl.searchParams`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at Object.get (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\next-server\app-route.runtime.prod.js:6:38424)
+    at d (C:\Users\LAngKA\dev\projrct\thai_ja_world\apps\web\.next\server\app\api\shop\items\route.js:1:580)
+    at C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\next-server\app-route.runtime.prod.js:6:34807
+    at C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\server\lib\trace\tracer.js:140:36
+    at NoopContextManager.with (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\@opentelemetry\api\index.js:1:7062)
+    at ContextAPI.with (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\@opentelemetry\api\index.js:1:518)
+    at NoopTracer.startActiveSpan (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\@opentelemetry\api\index.js:1:18093)
+    at ProxyTracer.startActiveSpan (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\@opentelemetry\api\index.js:1:18854)
+    at C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\server\lib\trace\tracer.js:122:103
+    at NoopContextManager.with (C:\Users\LAngKA\dev\projrct\thai_ja_world\node_modules\.pnpm\next@14.2.0_react-dom@18.3.1_react@18.3.1__react@18.3.1\node_modules\next\dist\compiled\@opentelemetry\api\index.js:1:7062) {
+  description: "Route /api/shop/items couldn't be rendered statically because it accessed `nextUrl.searchParams`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+ ✓ Generating static pages (41/41)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                         Size     First Load JS
+┌ ○ /                                               5.79 kB         117 kB
+├ ○ /_not-found                                     871 B          87.8 kB
+├ ○ /admin                                          6.57 kB        93.5 kB
+├ ƒ /api/activity                                   0 B                0 B
+├ ƒ /api/admin/auth                                 0 B                0 B
+├ ƒ /api/admin/broadcasts                           0 B                0 B
+├ ƒ /api/admin/community                            0 B                0 B
+├ ƒ /api/admin/notices                              0 B                0 B
+├ ƒ /api/admin/reports                              0 B                0 B
+├ ƒ /api/admin/stats                                0 B                0 B
+├ ƒ /api/admin/users                                0 B                0 B
+├ ƒ /api/auth/login                                 0 B                0 B
+├ ƒ /api/auth/me                                    0 B                0 B
+├ ƒ /api/auth/resend-verification                   0 B                0 B
+├ ƒ /api/auth/signup                                0 B                0 B
+├ ƒ /api/auth/verify-email                          0 B                0 B
+├ ƒ /api/broadcast                                  0 B                0 B
+├ ○ /api/community/debug                            0 B                0 B
+├ ƒ /api/community/posts                            0 B                0 B
+├ ƒ /api/community/posts/[id]                       0 B                0 B
+├ ƒ /api/community/posts/[id]/comments              0 B                0 B
+├ ƒ /api/community/posts/[id]/comments/[commentId]  0 B                0 B
+├ ƒ /api/friends                                    0 B                0 B
+├ ƒ /api/friends/[friendshipId]                     0 B                0 B
+├ ƒ /api/inventory                                  0 B                0 B
+├ ƒ /api/local                                      0 B                0 B
+├ ƒ /api/moderation/block                           0 B                0 B
+├ ƒ /api/moderation/report                          0 B                0 B
+├ ƒ /api/shop/items                                 0 B                0 B
+├ ƒ /api/shop/purchase                              0 B                0 B
+├ ƒ /api/users/[userId]                             0 B                0 B
+├ ƒ /api/users/[userId]/minihome                    0 B                0 B
+├ ƒ /api/users/[userId]/minihome/guestbook          0 B                0 B
+├ ƒ /api/users/[userId]/minihome/visit              0 B                0 B
+├ ○ /broadcast                                      3.69 kB         105 kB
+├ ○ /community                                      2.67 kB         109 kB
+├ ƒ /community/[id]                                 3.82 kB         100 kB
+├ ○ /friends                                        3.19 kB         105 kB
+├ ○ /home                                           1.4 kB          103 kB
+├ ○ /inventory                                      3.14 kB         105 kB
+├ ○ /local                                          3.01 kB         109 kB
+├ ○ /login                                          2.58 kB         111 kB
+├ ○ /menu                                           2.41 kB         111 kB
+├ ƒ /minihome/[userId]                              4.87 kB         110 kB
+├ ƒ /minihome/[userId]/decorate                     4.07 kB         106 kB
+├ ƒ /minihome/[userId]/guestbook                    971 B           106 kB
+├ ○ /my                                             4.05 kB         113 kB
+├ ○ /notices                                        1.88 kB         104 kB
+├ ○ /plaza                                          19.8 kB         122 kB
+├ ○ /profile                                        3.18 kB         105 kB
+├ ○ /report                                         2.57 kB         104 kB
+├ ○ /robots.txt                                     0 B                0 B
+├ ○ /shop                                           3.59 kB         105 kB
+├ ○ /signup                                         4.51 kB         113 kB
+├ ○ /sitemap.xml                                    0 B                0 B
+├ ○ /tips                                           6.42 kB         112 kB
+└ ○ /verify-email                                   2.31 kB        96.2 kB
++ First Load JS shared by all                       87 kB
+  ├ chunks/71ec73ba-5281902fe8563d25.js             53.6 kB
+  ├ chunks/963-95422a7a632159b0.js                  31.3 kB
+  └ other shared chunks (total)                     1.98 kB
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
