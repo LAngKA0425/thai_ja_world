@@ -132,14 +132,14 @@ export default function NoticesPage() {
             className="text-accent-blue hover:text-blue-400 transition-colors"
             title="수정"
           >
-            ✏️
+            수정
           </button>
           <button
             onClick={() => handleDelete(row)}
             className="text-accent-red hover:text-accent-red/80 transition-colors"
             title="삭제"
           >
-            🗑️
+            삭제
           </button>
         </div>
       ),

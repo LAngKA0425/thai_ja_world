@@ -54,8 +54,8 @@ export function DataTable<T>({
     return (
       <Card>
         <div className="flex items-center justify-center py-12">
-          <div className="animate-spin">⌛</div>
-          <p className="ml-2">로딩 중...</p>
+          <div className="w-5 h-5 border-2 border-accent-blue border-t-transparent rounded-full animate-spin"></div>
+          <p className="ml-2 text-dark-text-secondary">로딩 중...</p>
         </div>
       </Card>
     )

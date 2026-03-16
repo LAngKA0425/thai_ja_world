@@ -46,7 +46,7 @@ export default function BroadcastsPage() {
       senderId: 'user2',
       senderNickname: '프리미엄유저',
       type: 'premium',
-      message: '✨ 프리미엄 메시지입니다! 멋진 아이템 구경하세요~',
+      message: '프리미엄 메시지입니다! 멋진 아이템 구경하세요~',
       timestamp: new Date(Date.now() - 30 * 60 * 1000).toISOString(),
       status: 'active',
       viewCount: 1250,
@@ -119,7 +119,7 @@ export default function BroadcastsPage() {
       width: '12%',
       render: (value) => (
         <span className={value === 'premium' ? 'text-accent-blue font-bold' : ''}>
-          {value === 'premium' ? '✨ ' + ko.admin.premium : ko.admin.normal}
+          {value === 'premium' ? ko.admin.premium : ko.admin.normal}
         </span>
       ),
     },
@@ -155,7 +155,7 @@ export default function BroadcastsPage() {
           className="text-accent-red hover:text-accent-red/80 transition-colors"
           title="삭제"
         >
-          🗑️
+          삭제
         </button>
       ),
     },

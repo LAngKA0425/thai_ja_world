@@ -39,6 +39,28 @@ export const ko = {
     resolved: '처리됨',
     dismissed: '기각',
 
+    // news
+    newsManagement: '뉴스 관리',
+    newsList: '기사 목록',
+    newsCreate: '기사 작성',
+    newsEdit: '기사 수정',
+    newsApproval: '기사 승인',
+    newsSource: '출처',
+    newsCategory: '카테고리',
+    newsStatus: '상태',
+    newsAuthor: '작성자',
+    newsPublish: '발행',
+    newsApprove: '승인',
+    newsReject: '반려',
+    newsDraft: '초안',
+    newsPending: '승인 대기',
+    newsApproved: '승인됨',
+    newsPublished: '발행됨',
+    newsContent: '본문',
+    newsSummary: '요약',
+    newsUrl: '원본 URL',
+    newsNoArticles: '기사가 없습니다',
+
     // notices
     title: '제목',
     createNotice: '새 공지',

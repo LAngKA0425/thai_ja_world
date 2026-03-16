@@ -9,14 +9,16 @@ interface NavItem {
   href: string
   label: string
   icon: string
+  color: string
 }
 
 const navItems: NavItem[] = [
-  { href: '/dashboard', label: ko.admin.dashboard, icon: '📊' },
-  { href: '/users', label: ko.admin.userManagement, icon: '👥' },
-  { href: '/reports', label: ko.admin.reportManagement, icon: '📋' },
-  { href: '/broadcasts', label: ko.admin.broadcastLog, icon: '📢' },
-  { href: '/notices', label: ko.admin.noticeManagement, icon: '📝' },
+  { href: '/dashboard', label: ko.admin.dashboard, icon: 'D', color: 'bg-accent-blue' },
+  { href: '/users', label: ko.admin.userManagement, icon: 'U', color: 'bg-emerald-500' },
+  { href: '/reports', label: ko.admin.reportManagement, icon: 'R', color: 'bg-amber-500' },
+  { href: '/news', label: ko.admin.newsManagement, icon: 'N', color: 'bg-violet-500' },
+  { href: '/broadcasts', label: ko.admin.broadcastLog, icon: 'B', color: 'bg-cyan-500' },
+  { href: '/notices', label: ko.admin.noticeManagement, icon: 'P', color: 'bg-rose-500' },
 ]
 
 export function AdminSidebar() {
@@ -31,7 +33,7 @@ export function AdminSidebar() {
     >
       <div className="p-4 border-b border-dark-border flex items-center justify-between">
         <div className={`font-bold text-accent-blue transition-opacity duration-300 ${isCollapsed ? 'opacity-0' : 'opacity-100'}`}>
-          태자월드 관리자
+          TAEJA ADMIN
         </div>
         <button
           onClick={() => setIsCollapsed(!isCollapsed)}
@@ -56,7 +58,9 @@ export function AdminSidebar() {
                 }`}
                 title={isCollapsed ? item.label : ''}
               >
-                <span className="text-xl">{item.icon}</span>
+                <span className={`w-8 h-8 rounded-md flex items-center justify-center text-xs font-bold text-white ${isActive ? 'bg-white/20' : item.color}`}>
+                  {item.icon}
+                </span>
                 <span className={`transition-opacity duration-300 ${isCollapsed ? 'opacity-0 w-0' : 'opacity-100'}`}>
                   {item.label}
                 </span>

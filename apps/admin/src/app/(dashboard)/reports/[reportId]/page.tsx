@@ -254,7 +254,7 @@ export default function ReportDetailPage() {
                 onClick={() => handleAction('warn')}
                 disabled={isSaving}
               >
-                ⚠️ 경고 부여
+                경고 부여
               </Button>
               <Button
                 variant="warning"
@@ -262,7 +262,7 @@ export default function ReportDetailPage() {
                 onClick={() => handleAction('mute')}
                 disabled={isSaving}
               >
-                🔇 7일 뮤트
+                7일 뮤트
               </Button>
               <Button
                 variant="danger"
@@ -270,7 +270,7 @@ export default function ReportDetailPage() {
                 onClick={() => handleAction('ban')}
                 disabled={isSaving}
               >
-                🚫 30일 차단
+                30일 차단
               </Button>
               <Button
                 variant="secondary"

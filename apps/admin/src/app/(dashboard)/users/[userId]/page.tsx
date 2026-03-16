@@ -285,7 +285,7 @@ export default function UserDetailPage() {
               onClick={() => handleAction('warn')}
               disabled={actionLoading !== null}
             >
-              ⚠️ {ko.admin.giveWarning}
+              {ko.admin.giveWarning}
             </Button>
             <Button
               variant="warning"
@@ -293,7 +293,7 @@ export default function UserDetailPage() {
               onClick={() => handleAction('mute')}
               disabled={actionLoading !== null}
             >
-              🔇 {ko.admin.mute7days}
+              {ko.admin.mute7days}
             </Button>
             <Button
               variant="danger"
@@ -301,7 +301,7 @@ export default function UserDetailPage() {
               onClick={() => handleAction('tempban')}
               disabled={actionLoading !== null}
             >
-              🚫 {ko.admin.tempBan30days}
+              {ko.admin.tempBan30days}
             </Button>
             <Button
               variant="danger"
@@ -310,7 +310,7 @@ export default function UserDetailPage() {
               disabled={actionLoading !== null}
               isLoading={actionLoading === 'permban'}
             >
-              🔗 {ko.admin.permanentBan}
+              {ko.admin.permanentBan}
             </Button>
             <div className="pt-4 border-t border-dark-border">
               <a
@@ -320,7 +320,7 @@ export default function UserDetailPage() {
                 className="inline-block"
               >
                 <Button variant="secondary" className="w-full">
-                  🏠 {ko.admin.visitMinihome}
+                  {ko.admin.visitMinihome}
                 </Button>
               </a>
             </div>

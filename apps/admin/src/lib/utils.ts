@@ -37,6 +37,15 @@ export function getStatusColor(status: string): string {
   if (statusLower.includes('pending') || statusLower.includes('reviewing')) {
     return '#f59e0b'
   }
+  if (statusLower.includes('draft')) {
+    return '#94a3b8'
+  }
+  if (statusLower.includes('approved')) {
+    return '#3b82f6'
+  }
+  if (statusLower.includes('published')) {
+    return '#8b5cf6'
+  }
   return '#64748b'
 }
 
@@ -53,6 +62,9 @@ export function getStatusLabel(status: string): string {
     dismissed: '기각됨',
     normal: '일반',
     premium: '프리미엄',
+    draft: '초안',
+    approved: '승인됨',
+    published: '발행됨',
   }
   return statusMap[status.toLowerCase()] || status
 }

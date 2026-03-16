@@ -150,25 +150,21 @@ export default function DashboardPage() {
     <div className="space-y-8">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard
-          icon="👥"
           label={ko.admin.totalUsers}
           value={stats.totalUsers.toLocaleString()}
           color="blue"
         />
         <StatCard
-          icon="✅"
           label={ko.admin.activeUsers}
           value={stats.activeUsers.toLocaleString()}
           color="green"
         />
         <StatCard
-          icon="⚠️"
           label={ko.admin.pendingReports}
           value={stats.pendingReports}
           color="amber"
         />
         <StatCard
-          icon="📢"
           label={ko.admin.activeNotices}
           value={stats.activeBroadcasts}
           color="blue"
@@ -177,7 +173,7 @@ export default function DashboardPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <div>
-          <h2 className="text-xl font-bold text-dark-text mb-4">최근 신고 (상위 5)</h2>
+          <h2 className="text-lg font-semibold text-dark-text mb-4">최근 신고 (상위 5)</h2>
           <DataTable<any>
             columns={reportColumns}
             data={recentReports}
@@ -188,7 +184,7 @@ export default function DashboardPage() {
         </div>
 
         <div>
-          <h2 className="text-xl font-bold text-dark-text mb-4">최근 가입 유저 (상위 5)</h2>
+          <h2 className="text-lg font-semibold text-dark-text mb-4">최근 가입 유저 (상위 5)</h2>
           <DataTable<any>
             columns={userColumns}
             data={recentUsers}
@@ -200,36 +196,23 @@ export default function DashboardPage() {
       </div>
 
       <Card>
-        <h2 className="text-lg font-bold text-dark-text mb-4">빠른 링크</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <a
-            href="/users"
-            className="p-4 bg-dark-sidebar rounded-lg hover:bg-dark-border transition-colors text-center"
-          >
-            <p className="text-2xl mb-2">👥</p>
-            <p className="text-sm text-dark-text">{ko.admin.userManagement}</p>
-          </a>
-          <a
-            href="/reports"
-            className="p-4 bg-dark-sidebar rounded-lg hover:bg-dark-border transition-colors text-center"
-          >
-            <p className="text-2xl mb-2">📋</p>
-            <p className="text-sm text-dark-text">{ko.admin.reportManagement}</p>
-          </a>
-          <a
-            href="/broadcasts"
-            className="p-4 bg-dark-sidebar rounded-lg hover:bg-dark-border transition-colors text-center"
-          >
-            <p className="text-2xl mb-2">📢</p>
-            <p className="text-sm text-dark-text">{ko.admin.noticeManagement}</p>
-          </a>
-          <a
-            href="/notices"
-            className="p-4 bg-dark-sidebar rounded-lg hover:bg-dark-border transition-colors text-center"
-          >
-            <p className="text-2xl mb-2">📝</p>
-            <p className="text-sm text-dark-text">{ko.admin.noticeManagement}</p>
-          </a>
+        <h2 className="text-lg font-semibold text-dark-text mb-4">바로 가기</h2>
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+          {[
+            { href: '/users', label: ko.admin.userManagement, color: 'border-emerald-500 text-emerald-400' },
+            { href: '/reports', label: ko.admin.reportManagement, color: 'border-amber-500 text-amber-400' },
+            { href: '/news', label: ko.admin.newsManagement, color: 'border-violet-500 text-violet-400' },
+            { href: '/broadcasts', label: ko.admin.broadcastLog, color: 'border-cyan-500 text-cyan-400' },
+            { href: '/notices', label: ko.admin.noticeManagement, color: 'border-rose-500 text-rose-400' },
+          ].map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className={`p-4 bg-dark-sidebar rounded-lg border-l-4 ${link.color} hover:bg-dark-border transition-colors`}
+            >
+              <p className="text-sm font-medium">{link.label}</p>
+            </a>
+          ))}
         </div>
       </Card>
     </div>

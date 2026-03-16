@@ -10,6 +10,7 @@ const pageTitles: Record<string, string> = {
   '/reports': '신고 관리',
   '/broadcasts': '확성기 로그',
   '/notices': '공지 관리',
+  '/news': '뉴스 관리',
 }
 
 export function AdminHeader() {
