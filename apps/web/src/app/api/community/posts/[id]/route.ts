@@ -19,13 +19,11 @@ export async function GET(
   const { id } = params
 
   // 조회수 증가
-  await supabase.rpc('increment_view_count', { post_id: id }).catch(() => {
-    // RPC가 없으면 직접 업데이트
-    supabase
-      .from('CommunityPost')
-      .update({ viewCount: undefined })
-      .eq('id', id)
-  })
+  try {
+    await supabase.rpc('increment_view_count', { post_id: id })
+  } catch {
+    // RPC가 없으면 무시
+  }
 
   const { data, error } = await supabase
     .from('CommunityPost')
