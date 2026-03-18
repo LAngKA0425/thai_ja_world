@@ -64,7 +64,7 @@ export default function AdminPage() {
   const [deleteTarget, setDeleteTarget] = useState<Post | null>(null)
 
   // 탭
-  const [tab, setTab] = useState<'dashboard' | 'posts' | 'local'>('dashboard')
+  const [tab, setTab] = useState<'dashboard' | 'posts' | 'local' | 'news' | 'ops'>('dashboard')
 
   // 대시보드 통계
   interface DashboardUser {
@@ -100,6 +100,158 @@ export default function AdminPage() {
     description: '', discount: '', imageUrl: '', emoji: '🏪', phone: '', lineId: '',
     kakaoId: '', mapUrl: '', tags: '', isRecommended: false,
   })
+
+  // ── 뉴스봇 리뷰 큐 ──────────────────────────────────────
+  interface NewsItem {
+    id: string
+    review_status: string
+    publish_category: string
+    created_at: string
+    updated_at: string
+    published_at: string | null
+    notes: string | null
+    error_message: string | null
+    summary: {
+      id: string
+      summary_title: string
+      summary_briefing: string | null
+      summary_body: string
+      translated_title: string | null
+      kakao_short: string | null
+      translate_failed: boolean
+      copy_failed: boolean
+      processed_news: {
+        category: string
+        language: string
+        raw_news: { link: string; news_sources: { name: string } | null } | null
+      } | null
+    } | null
+  }
+  interface NewsBotStats {
+    pendingReview: number
+    approved: number
+    published: number
+    failed: number
+    todayCollected: number
+  }
+  const [newsItems, setNewsItems] = useState<NewsItem[]>([])
+  const [newsTotal, setNewsTotal] = useState(0)
+  const [newsPage, setNewsPage] = useState(1)
+  const [newsTotalPages, setNewsTotalPages] = useState(1)
+  const [newsStatusFilter, setNewsStatusFilter] = useState<string>('pending_review')
+  const [newsLoading, setNewsLoading] = useState(false)
+  const [newsError, setNewsError] = useState('')
+  const [newsBotStats, setNewsBotStats] = useState<NewsBotStats | null>(null)
+  const [newsActionLoading, setNewsActionLoading] = useState<string | null>(null)
+  const [pipelineLoading, setPipelineLoading] = useState(false)
+  const [pipelineMsg, setPipelineMsg] = useState('')
+
+  // ── 운영 로그 ────────────────────────────────────────────
+  interface OpsLog {
+    id: string
+    bot_type: string
+    stage?: string
+    event?: string
+    step?: string
+    status: string
+    notes: string | null
+    error_message: string | null
+    created_at: string
+  }
+  const [opsLogs, setOpsLogs] = useState<OpsLog[]>([])
+  const [opsTotal, setOpsTotal] = useState(0)
+  const [opsLoading, setOpsLoading] = useState(false)
+  const [opsError, setOpsError] = useState('')
+  const [opsKind, setOpsKind] = useState<'jobs' | 'events'>('jobs')
+
+  // ── 뉴스봇 데이터 패치 ────────────────────────────────────
+  const fetchNews = useCallback(async (statusFilter = newsStatusFilter, pageNum = newsPage) => {
+    if (!token) return
+    setNewsLoading(true)
+    setNewsError('')
+    try {
+      const params = new URLSearchParams({
+        status: statusFilter,
+        page: String(pageNum),
+        limit: '20',
+        stats: 'true',
+      })
+      const res = await fetch(`/api/admin/news?${params}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      const data = await res.json()
+      if (!res.ok) { setNewsError(data.error || '조회 실패'); return }
+      setNewsItems(data.items || [])
+      setNewsTotal(data.total || 0)
+      setNewsTotalPages(data.totalPages || 1)
+      if (data.stats) setNewsBotStats(data.stats)
+    } catch {
+      setNewsError('서버 연결 실패')
+    } finally {
+      setNewsLoading(false)
+    }
+  }, [token, newsStatusFilter, newsPage])
+
+  const handleNewsAction = async (id: string, action: string) => {
+    if (!token) return
+    setNewsActionLoading(id)
+    try {
+      const res = await fetch(`/api/admin/news/${id}`, {
+        method: 'PATCH',
+        headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action }),
+      })
+      const data = await res.json()
+      if (!res.ok) { alert(data.error || '처리 실패'); return }
+      fetchNews(newsStatusFilter, newsPage)
+    } catch {
+      alert('서버 연결 실패')
+    } finally {
+      setNewsActionLoading(null)
+    }
+  }
+
+  const handlePipelineTrigger = async (step: string) => {
+    if (!token) return
+    setPipelineLoading(true)
+    setPipelineMsg('')
+    try {
+      const res = await fetch('/api/admin/news/pipeline', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ step }),
+      })
+      const data = await res.json()
+      if (!res.ok) { setPipelineMsg(`❌ ${data.error}`); return }
+      setPipelineMsg(`✅ ${data.message}`)
+      setTimeout(() => setPipelineMsg(''), 5000)
+    } catch {
+      setPipelineMsg('❌ 서버 연결 실패')
+    } finally {
+      setPipelineLoading(false)
+    }
+  }
+
+  // ── 운영 로그 패치 ────────────────────────────────────────
+  const fetchOps = useCallback(async (kind = opsKind) => {
+    if (!token) return
+    setOpsLoading(true)
+    setOpsError('')
+    try {
+      const params = new URLSearchParams({ kind, type: 'all', limit: '50' })
+      const res = await fetch(`/api/admin/ops?${params}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      const data = await res.json()
+      if (!res.ok) { setOpsError(data.error || '조회 실패'); return }
+      setOpsLogs(data.items || [])
+      setOpsTotal(data.total || 0)
+    } catch {
+      setOpsError('서버 연결 실패')
+    } finally {
+      setOpsLoading(false)
+    }
+  }, [token, opsKind])
 
   const handleLogin = async () => {
     try {
@@ -223,6 +375,18 @@ export default function AdminPage() {
   useEffect(() => {
     if (isLoggedIn && tab === 'local') fetchLocal()
   }, [isLoggedIn, tab, fetchLocal])
+
+  useEffect(() => {
+    if (isLoggedIn && tab === 'news') {
+      setNewsStatusFilter('pending_review')
+      setNewsPage(1)
+      fetchNews('pending_review', 1)
+    }
+  }, [isLoggedIn, tab, fetchNews])
+
+  useEffect(() => {
+    if (isLoggedIn && tab === 'ops') fetchOps(opsKind)
+  }, [isLoggedIn, tab, fetchOps, opsKind])
 
   const fetchDashboard = useCallback(async () => {
     if (!token) return
@@ -394,6 +558,16 @@ export default function AdminPage() {
             color: '#fff', border: 'none', padding: '6px 14px', borderRadius: 6,
             cursor: 'pointer', fontSize: 14
           }}>로컬추천</button>
+          <button onClick={() => setTab('news')} style={{
+            background: tab === 'news' ? 'rgba(255,255,255,0.2)' : 'transparent',
+            color: '#fff', border: 'none', padding: '6px 14px', borderRadius: 6,
+            cursor: 'pointer', fontSize: 14
+          }}>뉴스봇{newsBotStats && newsBotStats.pendingReview > 0 ? ` (${newsBotStats.pendingReview})` : ''}</button>
+          <button onClick={() => setTab('ops')} style={{
+            background: tab === 'ops' ? 'rgba(255,255,255,0.2)' : 'transparent',
+            color: '#fff', border: 'none', padding: '6px 14px', borderRadius: 6,
+            cursor: 'pointer', fontSize: 14
+          }}>운영 로그</button>
           <button onClick={handleLogout} style={{
             background: 'rgba(255,255,255,0.15)', color: '#fff', border: 'none',
             padding: '6px 14px', borderRadius: 6, cursor: 'pointer', fontSize: 13
@@ -892,6 +1066,282 @@ export default function AdminPage() {
                 background: '#fff', borderRadius: 10, padding: 40,
                 boxShadow: '0 1px 4px rgba(0,0,0,0.06)', textAlign: 'center', color: '#888'
               }}>데이터가 없습니다</div>
+            )}
+          </div>
+        )}
+
+        {/* ── 뉴스봇 관리 탭 ──────────────────────────────── */}
+        {tab === 'news' && (
+          <div>
+            {/* 통계 카드 */}
+            {newsBotStats && (
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 12, marginBottom: 20 }}>
+                {[
+                  { label: '오늘 수집', value: newsBotStats.todayCollected, color: '#1565c0', bg: '#e3f2fd' },
+                  { label: '검토 대기', value: newsBotStats.pendingReview, color: '#f57c00', bg: '#fff3e0' },
+                  { label: '승인됨', value: newsBotStats.approved, color: '#2e7d32', bg: '#e8f5e9' },
+                  { label: '게시 완료', value: newsBotStats.published, color: '#145A46', bg: '#e8f5e9' },
+                  { label: '실패', value: newsBotStats.failed, color: '#c62828', bg: '#ffebee' },
+                ].map(({ label, value, color, bg }) => (
+                  <div key={label} style={{
+                    background: '#fff', borderRadius: 10, padding: '16px 20px',
+                    boxShadow: '0 1px 4px rgba(0,0,0,0.06)', textAlign: 'center'
+                  }}>
+                    <div style={{ fontSize: 28, fontWeight: 700, color }}>{value}</div>
+                    <div style={{ fontSize: 12, color: '#888', marginTop: 4 }}>{label}</div>
+                    <div style={{ width: 40, height: 4, background: bg, borderRadius: 2, margin: '8px auto 0' }} />
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* 수동 파이프라인 실행 */}
+            <div style={{
+              background: '#fff', borderRadius: 10, padding: '16px 20px', marginBottom: 16,
+              boxShadow: '0 1px 4px rgba(0,0,0,0.06)'
+            }}>
+              <div style={{ fontWeight: 700, fontSize: 14, marginBottom: 12, color: '#1a1a1a' }}>수동 파이프라인 실행</div>
+              <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center' }}>
+                {(['collect', 'process', 'summarize', 'all'] as const).map(step => (
+                  <button key={step} onClick={() => handlePipelineTrigger(step)} disabled={pipelineLoading} style={{
+                    padding: '7px 16px', background: pipelineLoading ? '#ccc' : '#145A46',
+                    color: '#fff', border: 'none', borderRadius: 6, cursor: pipelineLoading ? 'not-allowed' : 'pointer', fontSize: 13
+                  }}>
+                    {step === 'all' ? '전체 실행' : step === 'collect' ? '1.수집' : step === 'process' ? '2.전처리' : '3.AI요약'}
+                  </button>
+                ))}
+                {pipelineMsg && (
+                  <span style={{ fontSize: 13, color: pipelineMsg.startsWith('✅') ? '#2e7d32' : '#c62828' }}>
+                    {pipelineMsg}
+                  </span>
+                )}
+              </div>
+            </div>
+
+            {/* 필터 바 */}
+            <div style={{
+              background: '#fff', borderRadius: 10, padding: '14px 20px', marginBottom: 16,
+              boxShadow: '0 1px 4px rgba(0,0,0,0.06)', display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center'
+            }}>
+              {(['pending_review', 'approved', 'hold', 'published', 'failed', 'all'] as const).map(s => (
+                <button key={s} onClick={() => {
+                  setNewsStatusFilter(s)
+                  setNewsPage(1)
+                  fetchNews(s, 1)
+                }} style={{
+                  padding: '5px 14px', border: '1px solid #ddd', borderRadius: 20,
+                  background: newsStatusFilter === s ? '#145A46' : '#f5f5f5',
+                  color: newsStatusFilter === s ? '#fff' : '#555',
+                  cursor: 'pointer', fontSize: 13
+                }}>
+                  {{
+                    pending_review: '검토대기', approved: '승인됨', hold: '보류',
+                    published: '게시완료', failed: '실패', all: '전체'
+                  }[s]}
+                </button>
+              ))}
+              <button onClick={() => fetchNews(newsStatusFilter, newsPage)} disabled={newsLoading} style={{
+                marginLeft: 'auto', padding: '5px 14px', background: '#eee', border: 'none',
+                borderRadius: 6, cursor: 'pointer', fontSize: 13
+              }}>새로고침</button>
+            </div>
+
+            {/* 뉴스 목록 */}
+            {newsLoading && (
+              <div style={{ background: '#fff', borderRadius: 10, padding: 40, textAlign: 'center', color: '#888' }}>
+                불러오는 중...
+              </div>
+            )}
+            {newsError && !newsLoading && (
+              <div style={{ background: '#fff', borderRadius: 10, padding: 20, color: '#c62828', textAlign: 'center' }}>
+                {newsError}
+              </div>
+            )}
+            {!newsLoading && !newsError && newsItems.length === 0 && (
+              <div style={{ background: '#fff', borderRadius: 10, padding: 40, textAlign: 'center', color: '#999' }}>
+                해당 상태의 기사가 없습니다
+              </div>
+            )}
+            {!newsLoading && newsItems.map(item => {
+              const s = item.summary
+              const statusColors: Record<string, string> = {
+                pending_review: '#f57c00', approved: '#2e7d32', hold: '#757575',
+                published: '#145A46', failed: '#c62828',
+              }
+              const statusLabels: Record<string, string> = {
+                pending_review: '검토대기', approved: '승인됨', hold: '보류',
+                published: '게시완료', failed: '실패',
+              }
+              return (
+                <div key={item.id} style={{
+                  background: '#fff', borderRadius: 10, padding: '16px 20px', marginBottom: 10,
+                  boxShadow: '0 1px 4px rgba(0,0,0,0.06)',
+                  borderLeft: `4px solid ${statusColors[item.review_status] || '#ddd'}`
+                }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 12 }}>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ display: 'flex', gap: 6, alignItems: 'center', marginBottom: 6, flexWrap: 'wrap' }}>
+                        <span style={{
+                          padding: '2px 8px', borderRadius: 4, fontSize: 11, fontWeight: 600,
+                          background: statusColors[item.review_status] + '22',
+                          color: statusColors[item.review_status]
+                        }}>{statusLabels[item.review_status] || item.review_status}</span>
+                        <span style={{ fontSize: 11, color: '#999' }}>{item.publish_category}</span>
+                        {s?.translate_failed && <span style={{ fontSize: 11, color: '#f57c00' }}>번역실패</span>}
+                        {s?.copy_failed && <span style={{ fontSize: 11, color: '#f57c00' }}>카피실패</span>}
+                        <span style={{ fontSize: 11, color: '#aaa', marginLeft: 'auto' }}>{formatDate(item.created_at)}</span>
+                      </div>
+                      <div style={{ fontWeight: 700, fontSize: 15, color: '#1a1a1a', marginBottom: 4 }}>
+                        {s?.summary_title || '(제목 없음)'}
+                      </div>
+                      {s?.summary_briefing && (
+                        <div style={{ fontSize: 13, color: '#4a90d9', marginBottom: 4 }}>💡 {s.summary_briefing}</div>
+                      )}
+                      {s?.summary_body && (
+                        <div style={{ fontSize: 13, color: '#666', lineHeight: 1.6 }}>
+                          {s.summary_body.substring(0, 150)}{s.summary_body.length > 150 ? '...' : ''}
+                        </div>
+                      )}
+                      {item.notes && (
+                        <div style={{ fontSize: 12, color: '#888', marginTop: 4 }}>📝 {item.notes}</div>
+                      )}
+                    </div>
+                    {/* 액션 버튼 */}
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 6, minWidth: 100 }}>
+                      {item.review_status === 'pending_review' && (
+                        <>
+                          <button onClick={() => handleNewsAction(item.id, 'approved')}
+                            disabled={newsActionLoading === item.id}
+                            style={{ padding: '6px 14px', background: '#2e7d32', color: '#fff', border: 'none', borderRadius: 6, cursor: 'pointer', fontSize: 12 }}>
+                            ✓ 승인
+                          </button>
+                          <button onClick={() => handleNewsAction(item.id, 'hold')}
+                            disabled={newsActionLoading === item.id}
+                            style={{ padding: '6px 14px', background: '#757575', color: '#fff', border: 'none', borderRadius: 6, cursor: 'pointer', fontSize: 12 }}>
+                            보류
+                          </button>
+                        </>
+                      )}
+                      {item.review_status === 'approved' && (
+                        <button onClick={() => handleNewsAction(item.id, 'published')}
+                          disabled={newsActionLoading === item.id}
+                          style={{ padding: '6px 14px', background: '#145A46', color: '#fff', border: 'none', borderRadius: 6, cursor: 'pointer', fontSize: 12 }}>
+                          게시
+                        </button>
+                      )}
+                      {item.review_status === 'hold' && (
+                        <button onClick={() => handleNewsAction(item.id, 'pending_review')}
+                          disabled={newsActionLoading === item.id}
+                          style={{ padding: '6px 14px', background: '#f57c00', color: '#fff', border: 'none', borderRadius: 6, cursor: 'pointer', fontSize: 12 }}>
+                          재검토
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )
+            })}
+
+            {/* 페이지네이션 */}
+            {newsTotalPages > 1 && (
+              <div style={{ display: 'flex', justifyContent: 'center', gap: 8, marginTop: 16 }}>
+                <button onClick={() => { setNewsPage(p => Math.max(1, p - 1)); fetchNews(newsStatusFilter, Math.max(1, newsPage - 1)) }}
+                  disabled={newsPage <= 1}
+                  style={{ padding: '6px 14px', border: '1px solid #ddd', borderRadius: 6, background: '#fff', cursor: newsPage <= 1 ? 'not-allowed' : 'pointer', fontSize: 13 }}>
+                  이전
+                </button>
+                <span style={{ padding: '6px 14px', fontSize: 13, color: '#555' }}>{newsPage} / {newsTotalPages}</span>
+                <button onClick={() => { setNewsPage(p => Math.min(newsTotalPages, p + 1)); fetchNews(newsStatusFilter, Math.min(newsTotalPages, newsPage + 1)) }}
+                  disabled={newsPage >= newsTotalPages}
+                  style={{ padding: '6px 14px', border: '1px solid #ddd', borderRadius: 6, background: '#fff', cursor: newsPage >= newsTotalPages ? 'not-allowed' : 'pointer', fontSize: 13 }}>
+                  다음
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* ── 운영 로그 탭 ─────────────────────────────────── */}
+        {tab === 'ops' && (
+          <div>
+            <div style={{
+              background: '#fff', borderRadius: 10, padding: '14px 20px', marginBottom: 16,
+              boxShadow: '0 1px 4px rgba(0,0,0,0.06)', display: 'flex', gap: 8, alignItems: 'center'
+            }}>
+              <span style={{ fontSize: 14, fontWeight: 600, color: '#555', marginRight: 4 }}>로그 종류:</span>
+              {(['jobs', 'events'] as const).map(k => (
+                <button key={k} onClick={() => { setOpsKind(k); fetchOps(k) }} style={{
+                  padding: '5px 14px', border: '1px solid #ddd', borderRadius: 20,
+                  background: opsKind === k ? '#145A46' : '#f5f5f5',
+                  color: opsKind === k ? '#fff' : '#555', cursor: 'pointer', fontSize: 13
+                }}>
+                  {k === 'jobs' ? '작업 로그' : '이벤트 로그'}
+                </button>
+              ))}
+              <span style={{ marginLeft: 'auto', fontSize: 13, color: '#999' }}>총 {opsTotal}건</span>
+              <button onClick={() => fetchOps(opsKind)} disabled={opsLoading} style={{
+                padding: '5px 14px', background: '#eee', border: 'none', borderRadius: 6, cursor: 'pointer', fontSize: 13
+              }}>새로고침</button>
+            </div>
+
+            {opsLoading && (
+              <div style={{ background: '#fff', borderRadius: 10, padding: 40, textAlign: 'center', color: '#888' }}>
+                불러오는 중...
+              </div>
+            )}
+            {opsError && !opsLoading && (
+              <div style={{ background: '#fff', borderRadius: 10, padding: 20, color: '#c62828', textAlign: 'center' }}>
+                {opsError}
+              </div>
+            )}
+            {!opsLoading && !opsError && opsLogs.length === 0 && (
+              <div style={{ background: '#fff', borderRadius: 10, padding: 40, textAlign: 'center', color: '#999' }}>
+                로그가 없습니다
+              </div>
+            )}
+            {!opsLoading && opsLogs.length > 0 && (
+              <div style={{ background: '#fff', borderRadius: 10, overflow: 'hidden', boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>
+                <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
+                  <thead>
+                    <tr style={{ background: '#f9f9f9' }}>
+                      <th style={{ padding: '10px 14px', textAlign: 'left', fontWeight: 600 }}>봇</th>
+                      <th style={{ padding: '10px 14px', textAlign: 'left', fontWeight: 600 }}>단계/이벤트</th>
+                      <th style={{ padding: '10px 14px', textAlign: 'center', fontWeight: 600 }}>상태</th>
+                      <th style={{ padding: '10px 14px', textAlign: 'left', fontWeight: 600 }}>메모</th>
+                      <th style={{ padding: '10px 14px', textAlign: 'center', fontWeight: 600 }}>시각</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {opsLogs.map(log => (
+                      <tr key={log.id} style={{ borderBottom: '1px solid #f0f0f0' }}>
+                        <td style={{ padding: '8px 14px', color: '#555' }}>
+                          <span style={{
+                            padding: '2px 6px', borderRadius: 4, fontSize: 11, fontWeight: 600,
+                            background: log.bot_type === 'newsbot' ? '#e3f2fd' : '#f3e5f5',
+                            color: log.bot_type === 'newsbot' ? '#1565c0' : '#6a1b9a'
+                          }}>{log.bot_type}</span>
+                        </td>
+                        <td style={{ padding: '8px 14px', color: '#333' }}>
+                          {log.stage || log.event || '-'}{log.step ? ` / ${log.step}` : ''}
+                        </td>
+                        <td style={{ padding: '8px 14px', textAlign: 'center' }}>
+                          <span style={{
+                            padding: '2px 8px', borderRadius: 4, fontSize: 11, fontWeight: 600,
+                            background: log.status === 'success' || log.status === 'started' ? '#e8f5e9' : '#ffebee',
+                            color: log.status === 'success' || log.status === 'started' ? '#2e7d32' : '#c62828'
+                          }}>{log.status}</span>
+                        </td>
+                        <td style={{ padding: '8px 14px', color: '#777', fontSize: 12, maxWidth: 300, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                          {log.error_message || log.notes || '-'}
+                        </td>
+                        <td style={{ padding: '8px 14px', textAlign: 'center', fontSize: 12, color: '#aaa' }}>
+                          {formatDate(log.created_at)}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             )}
           </div>
         )}
