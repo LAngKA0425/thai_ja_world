@@ -186,6 +186,7 @@ pnpm --dir apps/web dev
 | PostgreSQL | 5432 | |
 | Redis | 6379 | |
 | nginx (prod only) | 80 | |
+| newsbot-admin (구, 이전 중) | 3099 | localhost:3099 — 마이그레이션 완료 후 제거 |
 
 ---
 
@@ -201,6 +202,93 @@ pnpm --dir apps/web dev
 | `pnpm build` | turbo 워크스페이스 전체 빌드 |
 | `pnpm prod:up` | production docker 실행 |
 | `pnpm prod:down` | production docker 종료 |
+
+---
+
+## 봇 실행어 (Bot Commands)
+
+> **사전 조건:** `newsbot/.env` 또는 루트 `.env` 에 `SUPABASE_URL`, `SUPABASE_SERVICE_KEY` 설정 필수.
+> Ollama 사용 시 `ollama serve` 가 실행 중이어야 함.
+
+### 뉴스봇 (newsbot)
+
+```powershell
+# ── 전체 파이프라인 (수집 → 전처리 → AI요약) ──
+pnpm newsbot
+# 또는 직접 실행
+cd newsbot && npm run pipeline
+
+# ── 단계별 실행 ──
+pnpm newsbot:collect      # 1단계: RSS 뉴스 수집 → raw_news 저장
+pnpm newsbot:process      # 2단계: 중복 제거 + 카테고리 분류 → processed_news 저장
+pnpm newsbot:summarize    # 3단계: Ollama 번역/요약/카피 → summaries + publish_logs(pending_review) 저장
+
+# ── 특수 수집기 ──
+pnpm newsbot:weather      # 방콕/파타야 날씨 수집 → CommunityPost 게시
+pnpm newsbot:exchange     # THB/KRW 환율 수집 → CommunityPost 게시
+pnpm newsbot:daily        # weather + exchange 한 번에 실행
+
+# ── 관리 서버 (구 localhost:3099 — 이전 중) ──
+pnpm newsbot:admin        # http://localhost:3099 로 구 관리 서버 실행
+
+# ── 초기 설정 확인 ──
+pnpm newsbot:setup        # env + Supabase 연결 + 테이블 존재 여부 확인
+```
+
+파이프라인 완료 후 승인 대기 기사는 **태자월드 관리자 페이지 → 뉴스봇 탭** (`/admin`)에서 확인합니다.
+
+### 레이더봇 (radarbot)
+
+```powershell
+# ── 전체 파이프라인 (수집 → 분류) ──
+pnpm radarbot
+# 또는 직접 실행
+cd radarbot && npm run pipeline
+
+# ── 단계별 실행 ──
+pnpm radarbot:collect     # 수집: radar_sources 소스에서 항목 수집 → radar_items(detected) 저장
+pnpm radarbot:classify    # 분류: 위험도(critical/high/medium/low) + 카테고리 분류 → pipeline_status=classified
+```
+
+분류 완료 항목은 **태자월드 관리자 페이지 → 뉴스봇 탭** (`/admin`)에서 검토합니다.
+
+### 봇 공통 상태머신
+
+```
+[수집] → pending_review → approved → published  ✅ 게시 완료 (변경 불가)
+                       → hold       → pending_review  (재검토)
+                       → failed     → pending_review  (재시도)
+```
+
+승인 없이 자동 게시되지 않습니다. 반드시 관리자 승인 후 게시됩니다.
+
+### 크론 스케줄 예시 (Linux crontab)
+
+```bash
+# 매 시간 뉴스봇 파이프라인 실행
+0 * * * * cd /path/to/thai_ja_world && pnpm newsbot >> /var/log/newsbot.log 2>&1
+
+# 매일 오전 8시 날씨/환율
+0 8 * * * cd /path/to/thai_ja_world && pnpm newsbot:daily >> /var/log/newsbot-daily.log 2>&1
+
+# 매 30분 레이더봇 파이프라인
+*/30 * * * * cd /path/to/thai_ja_world && pnpm radarbot >> /var/log/radarbot.log 2>&1
+```
+
+### Windows 작업 스케줄러 (PowerShell)
+
+```powershell
+# 뉴스봇 전체 파이프라인 1회 실행
+Set-Location C:\path\to\thai_ja_world
+pnpm newsbot
+
+# 뉴스봇 파이프라인 PowerShell 창에서 반복 실행 (1시간 간격)
+while ($true) {
+    pnpm newsbot
+    Write-Host "$(Get-Date) 완료. 다음 실행까지 1시간 대기..."
+    Start-Sleep -Seconds 3600
+}
+```
 
 ---
 
