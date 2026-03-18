@@ -50,7 +50,8 @@ async function main() {
   }
 
   console.log('\n=== 파이프라인 완료 ===');
-  console.log('관리 페이지에서 승인 대기 목록을 확인하세요: npm run admin');
+  console.log('관리 페이지(웹)에서 승인 대기 목록을 확인하세요: /admin → 뉴스봇 탭');
+  console.log('(구) 독립 관리 서버: npm run admin  →  http://localhost:3099');
 }
 
 main();

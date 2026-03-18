@@ -12,7 +12,21 @@
     "dev:docker:down": "docker compose -f docker-compose.dev.yml down",
     "prod:up": "docker compose up -d --build",
     "prod:down": "docker compose down",
-    "build": "turbo run build"
+    "build": "turbo run build",
+
+    "newsbot": "cd newsbot && node scripts/run-pipeline.js",
+    "newsbot:collect": "cd newsbot && node collector/collect.js",
+    "newsbot:process": "cd newsbot && node processor/process.js",
+    "newsbot:summarize": "cd newsbot && node summarizer/summarize.js",
+    "newsbot:weather": "cd newsbot && node collector/weather.js",
+    "newsbot:exchange": "cd newsbot && node collector/exchange.js",
+    "newsbot:daily": "cd newsbot && node collector/weather.js && node collector/exchange.js",
+    "newsbot:admin": "cd newsbot && node admin/server.js",
+    "newsbot:setup": "cd newsbot && node scripts/setup.js",
+
+    "radarbot": "cd radarbot && node scripts/run-pipeline.js",
+    "radarbot:collect": "cd radarbot && node collector/collect.js",
+    "radarbot:classify": "cd radarbot && node classifier/classify.js"
   },
   "devDependencies": {
     "concurrently": "^9.2.1",

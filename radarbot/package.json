@@ -1,0 +1,15 @@
+{
+  "name": "radarbot",
+  "version": "0.1.0",
+  "description": "태자월드 레이더봇 - 위험/주의 항목 수집·분류 봇",
+  "type": "module",
+  "scripts": {
+    "collect": "node collector/collect.js",
+    "classify": "node classifier/classify.js",
+    "pipeline": "node scripts/run-pipeline.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.7",
+    "dotenv": "^16.4.5"
+  }
+}

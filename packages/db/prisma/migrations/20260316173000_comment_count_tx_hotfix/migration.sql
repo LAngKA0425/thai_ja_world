@@ -32,6 +32,7 @@ BEGIN
   END IF;
 
   INSERT INTO "Comment" (
+    "id",
     "postId",
     "authorId",
     content,
@@ -39,6 +40,7 @@ BEGIN
     "updatedAt"
   )
   VALUES (
+    gen_random_uuid()::TEXT,
     p_post_id,
     p_author_id,
     p_content,
